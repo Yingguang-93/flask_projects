@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://www.liangzl.com/get-article-detail-146864.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>使用 Nginx + Gunicorn 的方式将 django 应用部署到自己的服务器丶Java教程网-IT开发者们的技术天堂</title>
+	<meta name="keywords" content="Java教程网,Java面试题宝典,java面试题,java教程,w3cschool,HTML,CSS,PHP,DOM,JavaScript,jQuery,XML,AJAX,ASP.NET,W3C,MySQL,SQL,jquery mobile,bootstrap,Python,jquery easyui,jquery ui,angularjs">
+	<meta name="description" content="供了Java面试题宝典,编程的基础技术教程, 介绍了HTML、Javascript，Java，Ruby , MySQL等各种编程语言的基础知识。 同时本站中也提供了大量的在线实例，通过实例，您可以更好的学习编程。..">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0,minimal-ui">
+	<link rel="shortcut icon" href="https://www.liangzl.com/img/favicon.ico" title="Favicon">
+<link rel="stylesheet" href="./使用 Nginx + Gunicorn 部署_files/font-awesome.min.css">
+<script src="./使用 Nginx + Gunicorn 部署_files/push.js.下载"></script><script src="./使用 Nginx + Gunicorn 部署_files/hm.js.下载"></script><script type="text/javascript" src="./使用 Nginx + Gunicorn 部署_files/jquery.min.js.下载"></script>
+<script type="text/javascript" src="./使用 Nginx + Gunicorn 部署_files/jquery.lazyload.min.js.下载"></script>
+<script type="text/javascript" src="./使用 Nginx + Gunicorn 部署_files/jquery-migrate.min.js.下载"></script>
+<script src="./使用 Nginx + Gunicorn 部署_files/layer.js.下载"></script><link rel="stylesheet" href="./使用 Nginx + Gunicorn 部署_files/layer.css" id="layui_layer_skinlayercss" style="">
+	<script type="text/javascript" src="./使用 Nginx + Gunicorn 部署_files/push.js(1).下载"></script>
+	<link rel="stylesheet" href="./使用 Nginx + Gunicorn 部署_files/style.css">
+<!-- 		<link rel='stylesheet' href='css/blog.min.css'/> -->
+		<link rel="stylesheet" href="./使用 Nginx + Gunicorn 部署_files/web.91abcfd9.css">
+		<link rel="stylesheet" href="./使用 Nginx + Gunicorn 部署_files/zenburn.css">
+	<!-- 设置Css -->
+	<style>
+		body {
+			background: #edc28d url('img/blog/bigbannerpic_04.png') no-repeat center 0;
+		}
+		.loading-bar {
+			background: #db1e1e;
+		}
+		.recentcomments a {
+			display: inline !important;
+			padding: 0 !important;
+			margin: 0 !important;
+		}
+		
+		/** 文章详情折叠   **/
+		#wrap {position: relative;overflow: hidden;}
+		#gradient {width: 100%;height: 35px;background: url() repeat-x;position: absolute;bottom: 0;left: 0;}
+		#read-more {margin-top : 20px;padding: 5px;border-top: 4px double #ddd;background: #fff;color: #333;}
+		#read-more a {background: url() no-repeat 100% 50%;font-weight: bold;text-decoration: none;}
+		#read-more a: hover {color: #000;}
+		
+	</style>
+	<script type="application/ld+json">
+        {
+            "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+            "@id": "https://www.liangzl.com/get-article-detail-146864.html",
+            "appid": "1585571422106716",
+            "title": "使用 Nginx + Gunicorn 的方式将 django 应用部署到自己的服务器,一个站在Java后端设计之路的男青年个人博客网站",
+            "images": [
+                "https://www.liangzl.com/editorImages/WebLogo.jpg"
+            ], 
+            "pubDate": "2019-09-27T10:09:35" 
+        }
+    </script>
+<link rel="stylesheet" href="./使用 Nginx + Gunicorn 部署_files/layer(1).css" id="layuicss-skinlayercss"></head>
+
+<body class="single single-post single-format-standard ajax_load widget_fixed main_off">
+    <!--头部-->
+<!--头部-->
+<!-- 黑白css -->
+<!-- <style type="text/css">
+html {
+	-webkit-filter: grayscale(100%) !important;
+	-moz-filter: grayscale(100%) !important;
+	-ms-filter: grayscale(100%) !important;
+	-o-filter: grayscale(100%) !important;
+	filter: grayscale(100%) !important;
+	filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1)
+		!important;
+	_filter: gray !important;
+}
+</style> -->
+<header id="header" class="glass_w" style="background: #edc28d url(&#39;img/blog/bigbannerpic_04.png&#39;) no-repeat center 0;">
+	<div class="header-mask-sd m_hide">
+		<div class="header-mask-blur">
+			<div class="header-mask" style="background: #edc28d url(&#39;img/blog/bigbannerpic_04.png&#39;) no-repeat center 0;"></div>
+			<div class="header-mask-bg"></div>
+		</div>
+	</div>
+	<div class="header-inner">
+		<div class="container clearfix">
+			<!--logo-->
+			<div class="header-logo">
+				<div class="logo">
+					<a href="https://www.liangzl.com/get-article-detail-146864.html#" title="logo"><img alt="个人博客" src="./使用 Nginx + Gunicorn 部署_files/logo.png" class="ajax_gif"> </a>
+				</div>
+			</div>
+			<!--头部导航-->
+			<nav class="header-menu">
+				<div class="header-menu-wrapper">
+					<ul class="header-menu-list">
+							<li class="menu-item menu-item-type-post_type menu-item-object-page">
+								<a href="https://www.liangzl.com/index.html">首页</a>
+							</li>
+							<li class="menu-item menu-item-type-post_type menu-item-object-page">
+								<a href="https://www.liangzl.com/get-mood.html">心情</a>
+							</li>
+							<li class="menu-item menu-item-type-post_type menu-item-object-page">
+								<a href="https://www.liangzl.com/get-about-me.html">关于我</a>
+							</li>
+							<li class="menu-item menu-item-type-post_type menu-item-object-page">
+								<a href="https://www.liangzl.com/get-comment-.html">留言板</a>
+							</li>
+							<li class="menu-item menu-item-type-post_type menu-item-object-page">
+								<a href="https://www.liangzl.com/get-friend-link.html">优秀个人博客</a>
+							</li>
+							<li class="menu-item menu-item-type-post_type menu-item-object-page">
+								<a href="javascript:void(window.open(&#39;https://jq.qq.com/?_wv=1027&amp;k=5y66hgb&#39;))">web技术交流QQ群:695856371</a>
+							</li>
+						<li><hr></li>
+<!-- 						手机端显示电脑导航 -->
+					</ul>
+				</div>
+			</nav>
+			<ul class="header-tool header-menu-list">
+				<a href="javascript:void(0)" class="menu-toggle"></a>
+				<li class="navbar-login m_hide">
+<!-- 					 -->
+<!-- 							<a href="javascript:void(0)" onclick="showPart(1)" style="color: #990033" class="">登陆</a>/ -->
+<!-- 							<a href="javascript:void(0)" onclick="showPart(2)" style="color: #990033" class="">注册</a> -->
+<!-- 						</li> -->
+<!-- 					 -->
+				</li><li class="navbar-skin menu-item-has-children m_hide" style="margin-right: -20px">
+					<a href="javascript:void(0)" class="skin-btn" style="color: black">皮肤</a>
+				</li>
+				<!-- 搜索栏 -->
+				<li class="search m_hide">
+					<input type="text" class="search-form-input text" style="border-color: red;" onkeydown="if(event.keyCode==13)searchWord()" id="keyWord" name="tittle" placeholder="站内文章查找..."> 
+					<a href="javaScript:void(0)" onclick="searchWord()" style="color: black"> 搜索</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="header-modal" class="with-tooltip m_hide" data-tooltip="茶馆、岛、慵懒的猫...都是美好的时光..."></div>
+</header>
+<!-- 椰子右下角广告 -->
+    <!-- bt搜索 -->
+	<section id="content" style="margin-top: -100px">
+		<div class="container">
+			<div class="content-inner">
+				<div class="main_header colbox m_hide shadow">
+					<!--显示评论数目-->
+<div class="avatar_box col">
+	<div class="me_img">
+		<div class="me_avatar">
+			<img src="./使用 Nginx + Gunicorn 部署_files/default-avatar.png" class="ajax_gif">
+		</div>
+		<ul class="me_name">
+			<li>
+				<p class="me_num">100755</p>
+				<p class="me_title">文章</p>
+			</li>
+			<li>
+				<p class="me_num">803</p>
+				<p class="me_title">评论</p>
+			</li>
+			<li>
+				<p class="me_num">12</p>
+				<p class="me_title">友链</p>
+			</li>
+		</ul>
+	</div>
+	<div class="bulletin">
+		<ul class="bulletin_list">
+			<li style="">最近新加了换肤功能，大家多来逛逛吧~~~~</li>
+			<li style="display: none;">喜欢这个网站的朋友可以加一下QQ群,我们一起交流技术。</li>
+		</ul>
+	</div>
+</div>					<!--小菜单-->
+<div class="main-menu col">
+	<div class="header-menu-wrapper">
+		<ul class="header-menu-list">
+							<li class="menu-item menu-item-type-taxonomy menu-item-object-category ">
+					<a href="https://www.liangzl.com/get-main-page-6-%E6%85%A2%E7%94%9F%E6%B4%BB-.html" style="font-weight: bold;">慢生活</a>
+				</li>
+				<li class="menu-item menu-item-type-taxonomy menu-item-object-category ">
+					<a href="https://www.liangzl.com/get-main-page-7-%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83-.html" style="font-weight: bold;">学无止境</a>
+				</li>
+				<li class="menu-item menu-item-type-taxonomy menu-item-object-category ">
+					<a href="https://www.liangzl.com/get-main-page-8-%E6%A8%A1%E6%9D%BF%E4%B8%8B%E8%BD%BD-.html" style="font-weight: bold;">模板下载</a>
+				</li>
+				<li class="menu-item menu-item-type-taxonomy menu-item-object-category ">
+					<a href="https://www.liangzl.com/get-main-page-9-%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BA%93-.html" style="font-weight: bold;">面试题库</a>
+				</li>
+				<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children">
+					<a href="javascript:void(0)" style="font-weight: bold;">互联网的一些事</a>
+						<ul class="sub-menu">
+									<li class="menu-item menu-item-type-custom menu-item-object-custom">
+										<a href="https://www.liangzl.com/get-main-page-32-IT%E8%B5%84%E8%AE%AF-.html">IT资讯</a>
+									</li>
+									<li class="menu-item menu-item-type-custom menu-item-object-custom">
+										<a href="https://www.liangzl.com/get-main-page-10-%E7%A7%91%E6%8A%80%E5%89%8D%E6%B2%BF-.html">科技前沿</a>
+									</li>
+									<li class="menu-item menu-item-type-custom menu-item-object-custom">
+										<a href="https://www.liangzl.com/get-main-page-34-%E4%B8%96%E7%95%8C%E4%B9%8B%E7%AA%97-.html">世界之窗</a>
+									</li>
+						</ul>
+				</li>
+			<img style="position:relative; ;left: -30px;top: -9px" data-v-cc99d1e8="" src="data:image/gif;base64,R0lGODlhGwATAOZnAP/7+v/39v5IMP/Cuv/z8f/SzP6Kev+uo/+ajP/f2v+mmv/Ox//a1f5NNf++tv/u7P/j3/44Hv4oC/+hlf5ROv+ekf/n4/6Fdf+yqP/Gv/+6sf/r6P4xFf4sEP5IAv5AJ/48Iv5UPv+KAv55Z/42Av+qn/+jl/5+bP49Av5tWf5eAv9qAv4kB/5pVP5lUP51Yv5FLP5ZQv5BAv46Av92Av4jAv/Wl/5ZAv5hS/43Av/Nxv4iAv+mAv93Av/X0f/Lw/9kAv+2rf9hAv+HAv5fAv6BcP5dAv5AAv4pAv/Pl/+YAv+mm/5RAv+tl//fl/9/Av5dR/5xXv41Av+uAv4wAv5bAv+cAv+lAv+Sg/9jAv42B//Xl/+FAv+yl/+1l/+BAv5OAv/El//Yl/45Av4gAv4CCP///////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFCgBnACwAAAAAGwATAAAHmYBmgoOEhYaHiImKi4yNGwmNjA0DkYoFZJSViFhkDpqDGoQNZAeDBJURKRZmGGRkE4IAFACROGQSAq5kCIIGZAyLp2ZBrjNERlIwGQquPoslFxBmUDk9Vko0R7octIoAuQIcQjaCYoJdJpEZukBmZWXu8PHv8+/yva4k8fv0+/6FE3LVg9ev4D1D0ugplGdw0UJB9u71+7QoEAAh+QQFCgBnACwBAAAAFQARAAAHloBmgoOEgwABhYmKDAKIio9mASAxkJAIZAaVjw1kB5qJD2RkA4afZgOiFWYFBgCmFaKiEgyPGwWDARGxLA6QIyeCAS1kKEiduAiugxQsCAcCZGAqWhUEBRhFERSFLrEoKyJDVTWxohq4ZhdkTYJJgmFehDqEITCiZmVl+Pr7+fuCC0Dc80eQn79CG3rlW/ivoaKCDQ8GAgAh+QQFCgBnACwBAAAAFQAQAAAHlIBngoOEg2ZmhYmKh4iKjmeMj4+RkosBD5WJAyFRAIYLno8GZGcaiGYJLheJFgGCCmSkHTEtH2QcFoUAAgpnBRI7VINkAi8QiQuxsSQ3HhIlCY2Qh5hnyWQeK19cKhE/DgoHDJEZIwkPZEwiPFNXT2OxKRgQlC9ktllbgk6CJkuE0gI0ICUjUyECJzoYVERgwsIzgQAAOw==" alt="hot" class="hot ajax_gif">
+			<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children">
+				<a href="javascript:void(0)" style="font-weight: bold;">IT 教程</a>
+				<ul class="sub-menu">
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a target="_blank" href="https://www.liangzl.com/ce/Docker.html">Docker教程</a>
+						</li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a target="_blank" href="https://www.liangzl.com/ce/java.html">Java基础教程</a>
+						</li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a target="_blank" href="https://www.liangzl.com/ce/javapool.html">Java多线程教程</a>
+						</li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a target="_blank" href="https://www.liangzl.com/ce/collection.html">Java集合教程</a>
+						</li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a target="_blank" href="https://www.liangzl.com/ce/java-io.html">Java IO流教程</a>
+						</li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a target="_blank" href="https://www.liangzl.com/ce/net.html">Java网络编程</a>
+						</li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a target="_blank" href="https://www.liangzl.com/ce/html-css.html">html/css教程</a>
+						</li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a target="_blank" href="https://www.liangzl.com/ce/javascript.html">JavaScript教程</a>
+						</li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a target="_blank" href="https://www.liangzl.com/ce/jdbc.html">JDBC教程</a>
+						</li>
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a target="_blank" href="https://www.liangzl.com/ce/interview.html">Java面试题汇总</a>
+						</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>				</div>
+ 				<div class="main_body colbox">
+					<!--pc端left star-->
+						<aside id="sidebar" class="sidebar-pc">
+							<!--left 自我介绍-->
+							<div class="m_hide"><div class="shadow" style="box-shadow: 2px 3px 10px #909090" id="about">
+	<p class="me_content">
+		站长的个人微信公众号：<span style="color: red;">Java云库</span>，每天分享技术文章和学习视频。让我们一起走向架构师之路！！Hi，欢迎来到梁钟霖个人博客网站。本博客是自己通过代码构建的。前端html，后端java技术。对这些技术有兴趣的朋友可以加入qq群695856371，我们一起学习进步。嘿嘿，欢迎来到梁子个人博客！~</p>
+	<div class="social_link">
+		<ul class="clearfix">
+			<li>
+				<a href="javascript:void(0)" class="tooltip tooltip-bottom" data-tooltip="微博：...."><i class="fa fa-weibo"></i></a>
+			</li>
+			<li>
+				<a href="https://wpa.qq.com/msgrd?v=3&amp;uin=419400980&amp;site=qq&amp;menu=yes" target="target" class="tooltip tooltip-bottom" data-tooltip="QQ：419400980"><i class="fa fa-qq"></i></a>
+			</li>
+			<li>
+				<a href="javascript:void(0)" class="tooltip tooltip-bottom" data-tooltip="微信：fakeyou0007"><i class="fa fa-weixin"></i></a>
+			</li>
+			<li>
+				<a href="javascript:void(0)" class="tooltip tooltip-bottom" data-tooltip="Github：...."><i class="fa fa-github"></i></a>
+			</li>
+			<li>
+				<a href="javascript:void(0)" class="tooltip tooltip-bottom" data-tooltip="...."><i class="fa fa-dribbble"></i></a>
+			</li>
+		</ul>
+	</div>
+</div></div>
+							<div id="widget" class="widgets">
+								<!--老板广告qq75997533-->
+<aside class="widget widget_categories shadow" style="box-shadow: 2px 3px 10px #909090" id="newArticle">
+	<img alt="" src="./使用 Nginx + Gunicorn 部署_files/javayunku.png" class="ajax_gif">
+</aside>								<!--标签-->
+<aside id="tag_cloud-2" class="widget widget_tag_cloud shadow" style="box-shadow: 2px 3px 10px #909090"> 
+	<h5 class="widget-title"><span style="font-weight: bold;">相关推荐</span></h5>
+	<div class="tagcloud">
+					<a href="https://www.liangzl.com/get-search-page-centos-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="centos">centos</a>
+			<a href="https://www.liangzl.com/get-search-page-vmware-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="vmware">vmware</a>
+			<a href="https://www.liangzl.com/get-search-page-linux-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="linux">linux</a>
+			<a href="https://www.liangzl.com/get-search-page-ajax-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="ajax">ajax</a>
+			<a href="https://www.liangzl.com/get-search-page-mysql-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="mysql">mysql</a>
+			<a href="https://www.liangzl.com/get-search-page-xmanager-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="xmanager">xmanager</a>
+			<a href="https://www.liangzl.com/get-search-page-java-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="java">java</a>
+			<a href="https://www.liangzl.com/get-search-page-html%E6%A8%A1%E6%9D%BF-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="html模板">html模板</a>
+			<a href="https://www.liangzl.com/get-search-page-%E9%82%AE%E7%AE%B1-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="邮箱">邮箱</a>
+			<a href="https://www.liangzl.com/get-search-page-ip-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="ip">ip</a>
+			<a href="https://www.liangzl.com/get-search-page-%E9%98%B2%E7%81%AB%E5%A2%99-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="防火墙">防火墙</a>
+			<a href="https://www.liangzl.com/get-search-page-JDK-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="JDK">JDK</a>
+			<a href="https://www.liangzl.com/get-search-page-%E5%85%B3%E9%94%AE%E8%AF%8D-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="关键词">关键词</a>
+			<a href="https://www.liangzl.com/get-search-page-java%E6%95%99%E7%A8%8B-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="java教程">java教程</a>
+			<a href="https://www.liangzl.com/get-search-page-static-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="static">static</a>
+			<a href="https://www.liangzl.com/get-search-page-%E5%86%92%E6%B3%A1-.html" target="_blank" class="tag-link-31 tag-link-position-1 with-tooltip" style="font-size: 12px;" data-tooltip="冒泡">冒泡</a>
+	</div>
+</aside>								<!--点击排行-->
+<aside class="widget widget_categories shadow" style="box-shadow: 2px 3px 10px #909090" id="ranking">
+	<h5 class="widget-title"><span style="font-weight: bold;">点击排行</span></h5>
+	<ul>
+					<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-141238.html">撸了今年阿里、腾讯和美团的面试，我有一个重要发现.......</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-525.html">分布式事务之TCC事务</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-114916.html">idea 2019最新注册码（激活码）永久破解</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-17693.html">入坑Flutter ,弃坑React-Native(简单体验)</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-38082.html">PlusToken智能钱包</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-1324.html">python下载器</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-8844.html">开源监控利器Prometheus初探</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-7.html">2019年125条常见的java面试笔试题汇总(三)</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-3812.html">java软件工程师简历中项目经验怎么写？</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-16019.html">彻底理解cookie，session，token</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-158750.html">IDEA 2019.3激活破解教程（永久）</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-162417.html">idea2019激活教程，永久激活！（附激活码）</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-15383.html">Angular - ng-repeat高级用法</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-10.html">2019年125条常见的java面试笔试题汇总(五)</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-21808.html">IDEA 调试功能</a>
+			</li>
+	</ul>
+</aside>
+								<!--广告2-->
+<!-- <aside class="widget widget_categories" id="newArticle"> -->
+<!-- 	<h5 class="widget-title"><span style="font-weight: bold;">网站标签</span></h5> -->
+<!-- 	<script type="text/javascript" src="//unioncode.liangzl.com/site/h458.js?lgyim=hyff"></script> -->
+<!-- </aside> -->
+								<!--最新文章-->
+<aside class="widget widget_categories shadow" style="box-shadow: 2px 3px 10px #909090" id="newArticle">
+	<h5 class="widget-title"><span style="font-weight: bold;">最新文章</span></h5>
+	<ul>
+					<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182923.html">Java 压缩/混淆 JavaScript 代码</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182922.html">插入，在PostgreSQL中重复更新吗？ - Insert, on duplicate update in PostgreSQL?</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182921.html">C#排列组合的代码</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182920.html">借款人变“担保人”，紫金农商行之责？</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182919.html">🔥不会状态机？不知道状态模式？不会利用它来减少if else并解耦？来看看这篇文章！！！</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182918.html">Wi-Fi 真的安全吗？一行代码就可让周边无线网络全部瘫痪！| 原力计划</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182917.html">GitHub 热点速览：刷 LeetCode 的正确姿势！</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182916.html">线程状态切换代码小记</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182915.html">学会这些 Python 美图技巧，就等着女朋友夸你吧！| 原力计划</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182914.html">不用费劲装 IDE 了！GitHub + VS Code 推出云端编程新利器</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182913.html">华为回应美新规：不涉及产品买卖；微软 GitHub 帐户疑被黑；GCC 10.1 发布 | 极客头条...</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182912.html">新基建下 AI 算力市场崛起，华为凭什么从中分一杯羹？</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182911.html">两种有效提高win10电脑开机速度的方法</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182910.html">只需要这三步，用Java也能图片识别</a>
+			</li>
+			<li class="cat-item cat-item-1">
+				<a target="_blank" href="https://www.liangzl.com/get-article-detail-182909.html">2、3代锐龙大卖！AMD处理器份额在韩国、德国均创历史新高</a>
+			</li>
+	</ul>
+</aside>
+								<!--博客统计-->
+	<!-- 							<aside id="efanblogstat-2" class="widget widget_blogstat">
+	<h5 class="widget-title"><span style="color: #1692e4;font-weight: bold;">每日站长统计</span></h5>
+	<ul>
+		<li>总数&nbsp;    &nbsp;&nbsp;IP：0 条</li>
+		<li>移动&nbsp;    &nbsp;&nbsp;IP：0 条</li>
+		<li>电脑&nbsp;    &nbsp;&nbsp;IP：0 条</li>
+		<li>操作总数：55082 条</li>
+		<li>运行天数：1389 天</li>
+		<li>建站时间：2016-12-28</li>
+		<li>最后更新：2020-05-10 </li>
+	</ul>
+</aside> -->
+								<!--最新评论-->
+<aside class="widget cs_widget_comment shadow" style="box-shadow: 2px 3px 10px #909090">
+	<h5 class="widget-title"><span style="font-weight: bold;">最新评论</span></h5>
+	<div class="textwidget" id="comment-list">
+		<ul>
+							<li class="colbox">
+					<p class="col avatar-box avatar">
+						<img class="lazy" data-original="img/user/8.png" height="64" width="64" src="./使用 Nginx + Gunicorn 部署_files/8.png">
+					</p>
+					<p class="col comment_box">
+						<a target="_blank" class="with-tooltip" href="https://www.liangzl.com/get-article-detail-2762.html" data-tooltip="org.apache.maven.archiver.MavenArchiver.getManifes">
+							<span class="s_name">码农路人:</span>
+							<span class="s_desc">改成： https://repo1.maven.org/maven2/.m2e/connectors/m2eclipse-mavenarchiver/0.17.2/N/LATEST/
+成功链接</span>
+						</a>
+					</p>
+				</li>
+				<li class="colbox">
+					<p class="col avatar-box avatar">
+						<img class="lazy" data-original="img/user/270.png" height="64" width="64" src="./使用 Nginx + Gunicorn 部署_files/270.png">
+					</p>
+					<p class="col comment_box">
+						<a target="_blank" class="with-tooltip" href="https://www.liangzl.com/get-article-detail-2762.html" data-tooltip="org.apache.maven.archiver.MavenArchiver.getManifes">
+							<span class="s_name">码农路人:</span>
+							<span class="s_desc">链接不能用</span>
+						</a>
+					</p>
+				</li>
+				<li class="colbox">
+					<p class="col avatar-box avatar">
+						<img class="lazy" data-original="img/user/200.png" height="64" width="64" src="./使用 Nginx + Gunicorn 部署_files/200.png">
+					</p>
+					<p class="col comment_box">
+						<a target="_blank" class="with-tooltip" href="https://www.liangzl.com/get-article-detail-180659.html" data-tooltip="Redis 桌面管理工具 RedisDesktopManager 2020.0 发布">
+							<span class="s_name">zxz:</span>
+							<span class="s_desc">回贴是一种美德</span>
+						</a>
+					</p>
+				</li>
+				<li class="colbox">
+					<p class="col avatar-box avatar">
+						<img class="lazy" data-original="img/user/285.png" height="64" width="64" src="./使用 Nginx + Gunicorn 部署_files/285.png">
+					</p>
+					<p class="col comment_box">
+						<a target="_blank" class="with-tooltip" href="https://www.liangzl.com/get-article-detail-181276.html" data-tooltip="2020Pycharm激活方法-到2021年（到期更新）">
+							<span class="s_name">woytu:</span>
+							<span class="s_desc">最新jetbrains intellij idea ： woetu.imfast.io woetu.now.sh</span>
+						</a>
+					</p>
+				</li>
+				<li class="colbox">
+					<p class="col avatar-box avatar">
+						<img class="lazy" data-original="img/user/76.png" height="64" width="64" src="./使用 Nginx + Gunicorn 部署_files/76.png">
+					</p>
+					<p class="col comment_box">
+						<a target="_blank" class="with-tooltip" href="https://www.liangzl.com/get-article-detail-158750.html" data-tooltip="IDEA 2019.3激活破解教程（永久）">
+							<span class="s_name">aa:</span>
+							<span class="s_desc">总是弹出没有importtant.txt怎么办</span>
+						</a>
+					</p>
+				</li>
+				<li class="colbox">
+					<p class="col avatar-box avatar">
+						<img class="lazy" data-original="img/user/13.png" height="64" width="64" src="./使用 Nginx + Gunicorn 部署_files/13.png">
+					</p>
+					<p class="col comment_box">
+						<a target="_blank" class="with-tooltip" href="https://www.liangzl.com/get-article-detail-139958.html" data-tooltip="Mycat连接MySQL 8的时候所需要注意哪些事项？你知道几项">
+							<span class="s_name">s:</span>
+							<span class="s_desc">请问mycat连接mysql8启动成功，但是远程使用工具Navicat连接mycat连接不上是什么原因（不是网络端口的原因）</span>
+						</a>
+					</p>
+				</li>
+				<li class="colbox">
+					<p class="col avatar-box avatar">
+						<img class="lazy" data-original="img/user/246.png" height="64" width="64" src="./使用 Nginx + Gunicorn 部署_files/246.png">
+					</p>
+					<p class="col comment_box">
+						<a target="_blank" class="with-tooltip" href="https://www.liangzl.com/get-article-detail-141238.html" data-tooltip="撸了今年阿里、腾讯和美团的面试，我有一个重要发现.......">
+							<span class="s_name">极简词典:</span>
+							<span class="s_desc">好奇站长的服务器配置。这么大图和评论，加载速度还特别快！</span>
+						</a>
+					</p>
+				</li>
+				<li class="colbox">
+					<p class="col avatar-box avatar">
+						<img class="lazy" data-original="img/user/183.png" height="64" width="64" src="./使用 Nginx + Gunicorn 部署_files/183.png">
+					</p>
+					<p class="col comment_box">
+						<a target="_blank" class="with-tooltip" href="https://www.liangzl.com/get-article-detail-152.html" data-tooltip="个人博客网站空间程序的选择">
+							<span class="s_name">缝纫机:</span>
+							<span class="s_desc">不得不说还很牛逼的http://www.bbcnmews.com/nb</span>
+						</a>
+					</p>
+				</li>
+				<li class="colbox">
+					<p class="col avatar-box avatar">
+						<img class="lazy" data-original="img/user/127.png" height="64" width="64" src="./使用 Nginx + Gunicorn 部署_files/127.png">
+					</p>
+					<p class="col comment_box">
+						<a target="_blank" class="with-tooltip" href="https://www.liangzl.com/get-article-detail-144969.html" data-tooltip="Mongodb聚合查询：通过文章的阅读量，评论量，点赞量等计算出一个热度值用于排序">
+							<span class="s_name">形形色色:</span>
+							<span class="s_desc">三生三世</span>
+						</a>
+					</p>
+				</li>
+				<li class="colbox">
+					<p class="col avatar-box avatar">
+						<img class="lazy" data-original="img/user/178.png" height="64" width="64" src="./使用 Nginx + Gunicorn 部署_files/178.png">
+					</p>
+					<p class="col comment_box">
+						<a target="_blank" class="with-tooltip" href="https://www.liangzl.com/get-article-detail-177771.html" data-tooltip="Mac使用Gradle上传jar到中央仓库（最完整的采坑记录）">
+							<span class="s_name">周涛:</span>
+							<span class="s_desc">你好,参考了你的文章中以后，我执行publish 会出现以下的报错信息：
+Execution failed for task ':Core:signMavenJavaPublication'.
+&gt; Cannot perform signing task ':Core:signMavenJavaPublication' because it has no configured signatory
+
+博主之前遇到这个问题吗？</span>
+						</a>
+					</p>
+				</li>
+		</ul>
+	</div>
+</aside>								<!--774广告-->
+<!-- <aside class="textwidget cs_widget_slider " style="position: relative;width: 100%;height: auto;overflow: hidden;z-index: 0">
+ <aside class="widget_tag_cloud">
+ 	<div class="nivoSlider" >
+ 		<a href="javaScript:void(0)" target="_black">
+						 广告位：左边
+ 					<img class="" src="img/blog/advert_01.jpg" data-thumb="img/blog/advert_01.jpg" title="" />
+ 			<script src="https://j.qiqivv.com:4433/blog/showdetail.php?z=127181"></script>
+ 		</a>
+  		<a href="javaScript:void(0)" target="_black"> 
+ 					<img class="" src="img/blog/advert_01.jpg" data-thumb="img/blog/advert_01.jpg" title="" />
+ 			<script src="https://j.qiqivv.com:4433/blog/showdetail.php?z=127181"></script>
+ 		</a>
+ <script src="https://j.qiqivv.com:4433/blog/showdetail.php?z=127192"></script>
+ 	</div>
+</aside>
+ <script type="text/javascript" src="//unioncode.liangzl.com/snftkwwcfqum.js"></script> -->							</div>
+						</aside>
+					<!--pc端left end-->
+					<!--内容主体 star-->
+					<aside id="sidebar" class="sidebar-phone" style="margin-top: 70px">
+						<div id="widget" class="widgets">
+							<!--导航-->
+<aside class="widget cs_widget_comment">
+<!-- 	<h5 class="widget-title"><span style="color: #E41637;font-weight: bold;">博客导航栏</span></h5> -->
+	<div class="textwidget" id="comment-list">
+		<ul>
+<!-- 			<li> -->
+<!-- 				 -->
+<!-- 					<a href="javascript:void(0)" onclick="showPart(1)" style="color: red" class="">登陆</a> / -->
+<!-- 					<a href="javascript:void(0)" onclick="showPart(2)" style="color: red" class="">注册</a> -->
+<!-- 				 -->
+<!-- 			</li> -->
+			<li class="search">
+				<form method="get" id="">
+					<input type="text" style="width: 80%" class="search-form-input text" onkeydown="if(event.keyCode==13)searchWordPhone()" id="keyWordPhone" placeholder="站内文章查找..."> 
+					<a href="javascript:void(0)" onclick="searchWordPhone()" style="color: black" class="skin-btn">搜索</a>
+				</form>
+			</li>
+<!-- 			 -->
+<!-- 				<li class="colbox" > -->
+<!-- 					<p class="col avatar-box avatar"> -->
+<!-- 						<img src="img/blog/default-avatar.png" data-echo="img/blog/default-avatar.png" class="avatar" height="64" width="64"> -->
+<!-- 					</p> -->
+<!-- 					<p class="col comment_box" > -->
+<!-- 						<a class="with-tooltip" href="/get-main-page-6-慢生活-.html" data-tooltip=""> -->
+<!-- 							<span class="s_name">:</span> -->
+<!-- 							<a style="color: dodgerblue" class="s_desc" href="/get-main-page-6-慢生活-.html">&nbsp;&nbsp;&nbsp;慢生活</a> -->
+<!-- 						</a> -->
+<!-- 					</p> -->
+<!-- 				</li> -->
+<!-- 				 -->
+<!-- 			 -->
+<!-- 				<li class="colbox" > -->
+<!-- 					<p class="col avatar-box avatar"> -->
+<!-- 						<img src="img/blog/default-avatar.png" data-echo="img/blog/default-avatar.png" class="avatar" height="64" width="64"> -->
+<!-- 					</p> -->
+<!-- 					<p class="col comment_box" > -->
+<!-- 						<a class="with-tooltip" href="/get-main-page-7-学无止境-.html" data-tooltip=""> -->
+<!-- 							<span class="s_name">:</span> -->
+<!-- 							<a style="color: dodgerblue" class="s_desc" href="/get-main-page-7-学无止境-.html">&nbsp;&nbsp;&nbsp;学无止境</a> -->
+<!-- 						</a> -->
+<!-- 					</p> -->
+<!-- 				</li> -->
+<!-- 				 -->
+<!-- 			 -->
+<!-- 				<li class="colbox" > -->
+<!-- 					<p class="col avatar-box avatar"> -->
+<!-- 						<img src="img/blog/default-avatar.png" data-echo="img/blog/default-avatar.png" class="avatar" height="64" width="64"> -->
+<!-- 					</p> -->
+<!-- 					<p class="col comment_box" > -->
+<!-- 						<a class="with-tooltip" href="/get-main-page-8-模板下载-.html" data-tooltip=""> -->
+<!-- 							<span class="s_name">:</span> -->
+<!-- 							<a style="color: dodgerblue" class="s_desc" href="/get-main-page-8-模板下载-.html">&nbsp;&nbsp;&nbsp;模板下载</a> -->
+<!-- 						</a> -->
+<!-- 					</p> -->
+<!-- 				</li> -->
+<!-- 				 -->
+<!-- 			 -->
+<!-- 				<li class="colbox" > -->
+<!-- 					<p class="col avatar-box avatar"> -->
+<!-- 						<img src="img/blog/default-avatar.png" data-echo="img/blog/default-avatar.png" class="avatar" height="64" width="64"> -->
+<!-- 					</p> -->
+<!-- 					<p class="col comment_box" > -->
+<!-- 						<a class="with-tooltip" href="/get-main-page-9-面试题库-.html" data-tooltip=""> -->
+<!-- 							<span class="s_name">:</span> -->
+<!-- 							<a style="color: dodgerblue" class="s_desc" href="/get-main-page-9-面试题库-.html">&nbsp;&nbsp;&nbsp;面试题库</a> -->
+<!-- 						</a> -->
+<!-- 					</p> -->
+<!-- 				</li> -->
+<!-- 				 -->
+<!-- 			 -->
+<!-- 				<li class="colbox" onclick="showPhoneNavigation(33)"> -->
+<!-- 					<p class="col avatar-box avatar"> -->
+<!-- 						<img src="img/blog/default-avatar.png" data-echo="img/blog/default-avatar.png" class="avatar" height="64" width="64"> -->
+<!-- 					</p> -->
+<!-- 					<p class="col comment_box" > -->
+<!-- 						<a class="with-tooltip" href="javaScript:void(0)" data-tooltip=""> -->
+<!-- 							<span class="s_name">:</span> -->
+<!-- 							<a style="color: dodgerblue" class="s_desc" href="javaScript:void(0)">&nbsp;&nbsp;&nbsp;互联网的一些事 ↓ </a> -->
+<!-- 						</a> -->
+<!-- 					</p> -->
+<!-- 				</li> -->
+<!-- 				 -->
+<!-- 					 -->
+<!-- 						<li class="menu-item menu-item-type-custom menu-item-object-custom navigation-type-show" style="margin-left: 50px;display: none" name="navigation33">  -->
+<!-- 							<a href="/get-main-page-32-IT资讯-.html">IT资讯</a> -->
+<!-- 						</li> -->
+<!-- 					 -->
+<!-- 						<li class="menu-item menu-item-type-custom menu-item-object-custom navigation-type-show" style="margin-left: 50px;display: none" name="navigation33">  -->
+<!-- 							<a href="/get-main-page-10-科技前沿-.html">科技前沿</a> -->
+<!-- 						</li> -->
+<!-- 					 -->
+<!-- 						<li class="menu-item menu-item-type-custom menu-item-object-custom navigation-type-show" style="margin-left: 50px;display: none" name="navigation33">  -->
+<!-- 							<a href="/get-main-page-34-世界之窗-.html">世界之窗</a> -->
+<!-- 						</li> -->
+<!-- 					 -->
+<!-- 				 -->
+<!-- 			 -->
+		</ul>
+	</div>
+</aside>						</div>
+					</aside>
+					<!--内容主体 star-->
+					<!-- 引入对联广告 -->
+					<div id="main" class="main-content">
+						<div class="main-inner">
+							<div id="posts-box">
+								<div class="posts clearfix" style="width: 100%;height: auto;  word-wrap:break-word;  word-break:break-all;  overflow: hidden;">
+									<article class="post type-post status-publish format-standard hentry category-wordpress tag-owl tag-wordpress shadow">
+										<div class="post-wrap">
+											<div class="post-inner">
+												<div class="post-body">
+<!-- 													<a onclick="addAdvertLog()" href="http://v.i9.org" target="_blank" ref="nofollow"><img src="https://img.alicdn.com/imgextra/i4/3458028083/O1CN01jg21UI29a3vVMl87D_!!3458028083.png" /><br></a> -->
+													<!-- 百度联盟广告 -->
+														<!-- 广告位：详情页底部 -->
+														<!-- <script>
+														(function() {
+														    var s = "_" + Math.random().toString(36).slice(2);
+														    document.write('<div id="' + s + '"></div>');
+														    (window.slotbydup=window.slotbydup || []).push({
+														        id: '6291316',
+														        container: s,
+														        size: '914,100',
+														        display: 'inlay-fix'
+														    });
+														})();
+														</script> -->
+													<header>
+														<center>
+															<h2 class="entry-title"><a style="color: black;font-size: 23px" href="javascritp:void(0)" title="使用 Nginx + Gunicorn 的方式将 django 应用部署到自己的服务器">使用 Nginx + Gunicorn 的方式将 django 应用部署到自己的服务器</a></h2>
+														</center>
+														<input type="hidden" value="146864" id="articleId">
+														<input type="hidden" value="使用 Nginx + Gunicorn 的方式将 django 应用部署到自己的服务器" id="articleTittle">
+														<input type="hidden" value="" id="downUrl">
+													</header>
+													<div class="post-content">
+														<div class="content clearfix">
+																<blockquote>
+																	<a style="color: #A00;font-weight:bold;font-size: 17px " href="https://www.liangzl.com/get-article-detail-141238.html">撸了今年阿里、腾讯和美团的面试，我有一个重要发现.......&gt;&gt;</a>
+																</blockquote>
+															<!-- 这里要折叠内容详情 -->
+															<div id="container">
+																<div id="wrap">
+																	<div style="line-height:25px;font-size: 14px;">
+																		<div class="content" id="articleContent">  
+ <h1>部署前准备</h1> 
+ <p>为了部署我们的博客，需要满足以下条件：</p> 
+ <ol> 
+  <li>Django项目需在Pipenv虚拟环境下建立</li> 
+ </ol> 
+ <h1>配置服务器</h1> 
+ <p>服务器环境为 CentOS 7（64 位）</p> 
+ <h2>创建一个超级用户</h2> 
+ <p>连接到远程服务器了，如果是一台全新服务器的话，通常我们是以 root 用户登录的。在 root 下部署代码不够安全，最好是建一个新用户（如果你已经以非 root 用户登录的话可以跳过这一步）。下面的一些列命令将创建一个拥有超级权限的新用户（把 <strong>zerobit</strong> 替换成你自己想要的用户名）：</p> 
+ <pre class="hljs "><code># 在 root 用户下运行这条命令创建一个新用户，zerobit 是用户名
+# 选择一个你喜欢的用户名，不一定非得和我的相同
+root@server:~# adduser zerobit
+​
+# 为新用户设置密码
+# 注意在输密码的时候不会有字符显示，不要以为键盘坏了，正常输入即可
+root@server:~# passwd zerobit
+​
+# 把新创建的用户加入超级权限组
+root@server:~# usermod -aG wheel zerobit
+​
+# 切换到创建的新用户
+root@server:~# su - zerobit
+​
+# 切换成功，@符号前面已经是新用户名而不是 root 了
+zerobit@server:$
+</code></pre> 
+ <p>如果是新服务器的话，最好先更新一下系统，避免因为版本太旧而给后面安装软件带来麻烦。运行下面的两条命令：</p> 
+ <pre class="hljs "><code>zerobit@server:$ sudo yum update
+zerobit@server:$ sudo yum upgrade
+</code></pre> 
+ <h2>更新 SQLite3</h2> 
+ <p>为了方便，我们博客使用了 SQLite3 数据库，django 2.2 要求 SQLite3 数据库版本在 3.8.3 以上，而 CentOS 7 系统自带版本低于 django 2.2 所要求的最低版本，所以首先来更新 SQLite3 的版本。</p> 
+ <blockquote> 
+  <p>注意：有可能你使用的服务器系统发行版 SQLite3 已经高于 3.8.3，这一步就可以跳过。如何查看 SQLite3 的版本呢？请执行 sqlite3 --version</p> 
+ </blockquote> 
+ <p>首先登陆到 sqlite的<a href="https://sqlite.org/download.html" title="官方下载地址">官方下载地址</a>，查看最新发布的版本，截止到本教程完成时，其最新版本为 3.29.0，找到该版本的源码压缩包，复制其下载链接，然后通过 wget 命令下载到服务器（我一般习惯将源码放在 ~/src 目录下。）</p> 
+ <pre class="hljs "><code># 创建 src 目录并进到这个目录
+zerobit@server:$ mkdir -p ~/src
+zerobit@server:$ cd ~/src
+​
+# 下载 sqlite3 源码并解压安装
+zerobit@server:$ wget https://sqlite.org/2019/sqlite-autoconf-3290000.tar.gz
+zerobit@server:$ tar zxvf sqlite-autoconf-3290000.tar.gz
+zerobit@server:$ cd sqlite-autoconf-3290000
+zerobit@server:$ ./configure
+zerobit@server:$ make
+zerobit@server:$ sudo make install
+</code></pre> 
+ <blockquote> 
+  <p>小贴士：如果 wget 命令不存在，使用 sudo yum install -y wget 安装即可。</p> 
+ </blockquote> 
+ <h2>安装 Python3 和 Pipenv</h2> 
+ <p>CentOS 7 自带的 Python 发行版为 2.7，因此需要安装 Python3，为了兼容性，我安装的是 Python 3.6.4。</p> 
+ <p>首先安装可能的依赖：</p> 
+ <pre class="hljs "><code>zerobit@server:$ sudo yum install -y openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel
+</code></pre> 
+ <p>然后下载 Python 3.6.4 的源码并解压：</p> 
+ <pre class="hljs "><code>zerobit@server:$ cd ~/src
+zerobit@server:$ wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz
+zerobit@server:$ tar -zxvf Python-3.6.4.tgz
+</code></pre> 
+ <p>最后编译安装：</p> 
+ <pre class="hljs "><code>zerobit@server:$ cd Python-3.6.4
+zerobit@server:$ ./configure LD_RUN_PATH=/usr/local/lib LDFLAGS="-L/usr/local/lib" CPPFLAGS="-I/usr/local/include"
+zerobit@server:$ make LD_RUN_PATH=/usr/local/lib
+zerobit@server:$ sudo make install
+</code></pre> 
+ <p>注意这里安装 Python 时，Python 会依赖 SQLite3 的库，所以在 configure 时通过 LD_RUN_PATH 指定依赖的搜索目录（因为我们之前更新了 SQLite3 的版本，指定依赖搜索目录确保使用新的 SQLite3 依赖库），另外两个参数作用类似。</p> 
+ <p>然后输入 python3.6 -V 和 pip3.6 -V 命令测试安装结果，输出版本号说明安装成功了。</p> 
+ <p>有了 pip，就可以安装 Pipenv 了：</p> 
+ <pre class="hljs "><code>zerobit@server:$ sudo pip3.6 install pipenv
+</code></pre> 
+ <blockquote> 
+  <p>小贴士：如果以上命令报错，可能是因为 pip3.6 安装在当前用户的 bin 路径下（/usr/local/bin/），使用 pip3.6 install pipenv --users 命令也把 Pipenv 安装到当前用户的 bin 路径下就可以了。</p> 
+ </blockquote> 
+ <h1>部署代码</h1> 
+ <p>接下来开始准备部署代码，让我们的应用在服务上跑起来，这和在本地开发时的过程是一模一样的。不过为了将应用部署到服务器上，我们首先要对项目做一点配置，打开 settings.py，找到 ALLOWED_HOSTS，将其修改为：</p> 
+ <pre class="hljs "><code>ALLOWED_HOSTS = ['*']
+</code></pre> 
+ <p>Django 项目中会有一些 CSS、JavaScript 等静态文件，为了能够方便地让 Nginx 处理这些静态文件的请求，我们把项目中的全部静态文件收集到一个统一的目录下，这个目录通常位于 django 项目的根目录，并且命名为 static。为了完成这些任务，需要在项目的配置文件里做一些必要的配置：</p> 
+ <pre class="hljs "><code># 其他配置...
+​
+STATIC_URL = '/static/'
+# 加入下面的配置
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+</code></pre> 
+ <p>STATIC_ROOT 即指定静态文件的收集路径，这里指定为 BASE_DIR（项目根目录，在 settings.py 文件起始处定义）下的 static 文件夹。</p> 
+ <p>现在的关键是把代码传到服务器上来了，这里我们使用 git。首先安装 git：</p> 
+ <pre class="hljs "><code>zerobit@server:$ sudo yum install -y git
+</code></pre> 
+ <p>将代码上传到 GitHub 等代码托管平台，这样我们就可以方便地把代码拉取到服务器了。Git 和 GitHub 的使用相信你已经很熟悉了，这里就不赘述过程。如果不知道如何使用地话可以自行百度相关教程。<strong>注意数据库文件不要上传！</strong></p> 
+ <p>我通常喜欢把应用代码放在 ~/apps/ 目录下，先来设置一下服务器的文件结构，用于存放应用代码等相关文件：</p> 
+ <pre class="hljs "><code># 在用户目录下创建 apps 目录并进入
+zerobit@server:$ mkdir -p ~/apps
+zerobit@server:$ cd ~/apps
+​
+# 拉取代码
+zerobit@server:$ git clone Git项目地址.git
+</code></pre> 
+ <p>然后进入到项目根目录，安装项目依赖：</p> 
+ <pre class="hljs "><code>zerobit@server:$ cd ~/apps/项目根目录
+​
+zerobit@server:$ pipenv install --deploy --ignore-pipfile
+</code></pre> 
+ <p>这里指定 --deploy 参数，Pipenv 将只会安装 Pipfile 中 [packages] 下指定的依赖。因为我们现在是在线上环境进行部署，仅用于开发环境的相关依赖我们并不需要。</p> 
+ <p>--ignore-pipfile 将会使 Pipenv 从 Pipfile.lock 文件中安装项目依赖。Pipfile.lock 记录了项目依赖的精确信息，从这里读取依赖信息能够确保依赖信息被无意中修改或者破坏而使得运行环境因为依赖包的缘故出现不可预料的问题。</p> 
+ <p>Pipenv 会自动帮我们创建虚拟环境，然后将项目依赖安装到虚拟环境下。</p> 
+ <p>然后创建一下数据库：</p> 
+ <pre class="hljs "><code>zerobit@server:$ pipenv run python manage.py migrate
+</code></pre> 
+ <p>启动开发服务器：</p> 
+ <p>yangxg<a href="https://my.oschina.net/servingyou">@server</a>:$ pipenv run python manage.py runserver 0.0.0.0:8000 这里我们启动开发服务器时指定了服务器运行的 ip 和端口，这将允许通过公网 ip 的 8000 端口访问我们的博客。</p> 
+ <p>访问 ip:8000，可以看到访问成功</p> 
+ <h1>使用 Gunicorn</h1> 
+ <p>Django 官方文档强调使用 runserver 开启的开发服务器仅用于开发测试，不建议用于生产环境。所以我们使用流行的 Gunicorn 来启动可以用于线上环境的服务器。</p> 
+ <p>首先进入到项目根目录，安装 Gunicorn：</p> 
+ <pre class="hljs "><code>zerobit@server:$ pipenv install gunicorn
+</code></pre> 
+ <p>由于我们在服务端修改安装了 gunicorn，代码中 Pipfile 文件和 Pipfile.lock 文件会被更新，因此别忘了把改动同步到本地，具体做法可以自行学习，以下是一个参考：</p> 
+ <pre class="hljs "><code># 服务端提交代码
+zerobit@server:$ git add Pipfile Pipfile.lock
+zerobit@server:$ git commit -m "add gunicorn dependency"
+zerobit@server:$ git push
+​
+# 本地拉取代码
+git pull
+</code></pre> 
+ <p>回到线上服务器，在项目根目录，执行下面的命令启动服务：</p> 
+ <pre class="hljs "><code>zerobit@server:$ pipenv run gunicorn 项目名称.wsgi -w 2 -k gthread -b 0.0.0.0:8000
+</code></pre> 
+ <p>来解释一下各个参数的含义。</p> 
+ <p><code>-w 2</code> 表示启动 2 个 worker 用于处理请求（一个 worker 可以理解为一个进程），通常将 worker 数目设置为 CPU 核心数的 2-4 倍。</p> 
+ <p><code>-k gthread</code> 指定每个 worker 处理请求的方式，根据大家的实践，指定为 gthread 的异步模式能获取比较高的性能，因此我们采用这种模式。</p> 
+ <p><code>-b 0.0.0.0:8000</code>，将服务绑定到 8000 端口，运行通过公网 ip 和 8000 端口访问应用。</p> 
+ <p>访问 ip:8000 ，应用成功访问了，但是我们看到样式完全乱了。别急，这不是 bug！此前我们使用 django 自带的开发服务器，它会自动帮我们处理静态样式文件，但是 Gunicorn 并不会帮我们这么做。因为处理静态文件并不是 Gunicorn 所擅长的事，应该将它交给更加专业的服务应用来做，比如 Nginx。</p> 
+ <h1>安装及配置 Nginx 服务器</h1> 
+ <p>Nginx (engine x) 是一个高性能的 HTTP 和反向代理 web 服务器，它的功能非常多，这里我们主要用它来处理静态文件以及将非静态文件的请求反向代理给 Gunicorn。</p> 
+ <p>当我们访问一个页面时，服务器会接收到下面两种请求：</p> 
+ <p>显示数据信息，这些信息通常保存在数据库里，因此需要调用数据库获取数据。 图片、css、js 等存在服务器某个文件夹下的静态文件。 对于前一种请求，数据信息需要借助 django 从数据库中获取，Nginx 处理不了，它就会把这个请求转发给 运行在 Gunicorn 服务中的 django 应用，让 django 去处理。而对于后一种静态文件的请求，只需要去这些静态文件所在的文件夹获取，Nginx 就会代为处理，不再麻烦 django。</p> 
+ <p>用 django 去获取静态文件是很耗时的，但 Nginx 可以很高效地处理，这就是我们要使用 Nginx 的原因。</p> 
+ <h2>安装 Nginx：</h2> 
+ <pre class="hljs "><code>zerobit@server:$ sudo yum install epel-release -y
+zerobit@server:$ sudo yum install nginx -y
+</code></pre> 
+ <p>运行下面的命令启动 Nginx 服务：</p> 
+ <pre class="hljs "><code>zerobit@server:$ sudo systemctl start nginx
+</code></pre> 
+ <p>在浏览器输入 ip（不输入端口则默认为 80 端口，Nginx 默认在 80 端口监听请求），看到 Nginx 的欢迎界面说明 Nginx 启动成功了。</p> 
+ <h2>配置 Nginx</h2> 
+ <p>Nginx 的配置位于 <code>/etc/nginx/nginx.conf</code> 文件中，你可以打开这个文件看看里面的内容，下面是一些关键性的配置：</p> 
+ <pre class="hljs "><code>user zerobit zerobit;
+...
+http {
+    ...
+
+    # 新建server配置
+    server {
+         charset utf-8;
+         listen 80 default_server;
+         listen [::]:80 default_server;
+         server_name localhost;
+
+         location /static {
+                alias /home/zerobit/apps/项目目录/static/;
+         }
+
+         location / {
+                 proxy_set_header Host $host;
+                 proxy_pass http://127.0.0.1:8000;
+         }
+    }
+
+    # 注释掉原来的server配置
+    #server {
+    #    listen       80 default_server;
+    #    listen       [::]:80 default_server;
+    #    server_name  _;
+    #    root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+    #    include /etc/nginx/default.d/*.conf;
+
+    #    location / {
+    #    }
+
+    #    error_page 404 /404.html;
+    #        location = /40x.html {
+    #    }
+
+    #    error_page 500 502 503 504 /50x.html;
+    #        location = /50x.html {
+    #    }
+    #}
+}
+</code></pre> 
+ <p><strong>首先</strong>是这个 <code>user</code> 配置，用于指定 Nginx 进程运行时的用户和组（分别为第一个和第二个参数），为了防止可能的权限问题，我们改成当前系统用户（我的用户名是 <code>zerobit</code>，所属组 <code>zerobit</code>，记得改成你自己服务器中运行的用户和组，修改完后记得保存文件内容）</p> 
+ <p><strong>然后</strong>在 http 配置下有一个 <code>server</code> 模块，<code>server</code> 模块用于配置一个虚拟服务，使这个虚拟服务监听指定的端口和域名。你可以配置多个 <code>server</code>，这样就会启动多个虚拟服务，用于监听不同端口，或者是同一个端口，但是不同的域名，这样你就可以在同一服务器部署多个 web 应用了。</p> 
+ <p><strong>server模块</strong> 首先我们配置了一个虚拟服务，编码方式为 utf-8，<code>listen</code> 监听于 80 端口。并配置为默认以IP地址访问；如果有域名则配置 <code>server_name</code> 为你的域名</p> 
+ <p>所有 <code>URL</code> 匹配 <code>/stati</code>c 的请求均由 Nginx 处理，<code>alias</code> 指明了静态文件的存放目录，这样 Nginx 就可以在这个目录下找到请求的文件返回给客户端。</p> 
+ <p>其它请求转发给运行在本机 8000 端口的应用程序处理，我们会在这个端口启动 Gunicorn 用于处理 Nginx 转发过来的请求。</p> 
+ <p>重启 nginx 使得配置生效：</p> 
+ <pre class="hljs "><code>zerobit@server:$ sudo systemctl restart nginx
+</code></pre> 
+ <h1>关闭项目 DEBUG 模式，收集静态文件</h1> 
+ <p>开发环境下，django 为了调试方便，会将 <code>settings.py</code> 文件中的 <code>DEBUG</code> 选项配置为 <code>True</code>，这样如果程序运行出错，调试信息将一览无余，这在开发时很方便，但部署到线上就会带来巨大安全隐患，所以我们把 <code>DEBUG</code> 选项设置为 <code>False</code>，关闭调试模式，在本地将 <code>settings.py</code> 中的 <code>DEBUG</code> 设为：</p> 
+ <pre class="hljs "><code>DEBUG=False
+</code></pre> 
+ <p><strong>线上服务器更新最新的代码</strong>，然后运行命令收集静态文件到之前配置的 <code>STATIC_ROOT</code> 目录下：</p> 
+ <pre class="hljs "><code>zerobit@server:$ pipenv run python manage.py collectstatic
+</code></pre> 
+ <p>然后在项目根目录使用 Gunicorn 启动服务。</p> 
+ <pre class="hljs "><code>zerobit@server:$ pipenv run gunicorn 项目名称.wsgi -w 2 -k gthread -b 0.0.0.0:8000
+</code></pre> 
+ <p>现在，访问配置的域名，可以看到项目成功部署！</p> 
+ <h1>使用 Supervisor 来管理 Gunicorn 进程</h1> 
+ <p>现在 Gunicorn 是我们手工启动的，一旦我们退出 shell，服务器就关闭了，博客无法访问。就算在后台启动 Gunicorn，万一哪天服务器崩溃重启了又得重新登录服务器去启动，非常麻烦。为此使用 Supervisor 来管理 Gunicorn 进程，这样当服务器重新启动或者 Gunicorn 进程意外崩溃后，Supervisor 会帮我们自动重启 Gunicorn。</p> 
+ <h2>配置 Supervisor</h2> 
+ <p>先按 Ctrl + C 停止刚才启动的 Gunicorn 服务进程</p> 
+ <pre class="hljs "><code>zerobit@server:$ pip install supervisor
+</code></pre> 
+ <p>为了方便，我一般会设置如下的目录结构（位于 <code>~/etc</code> 目录下）来管理 Supervisor 有关的文件：</p> 
+ <pre class="hljs "><code>[zerobit@server etc]$ tree
+.
+└── supervisor
+    ├── conf.d
+    │&nbsp;&nbsp; └── 项目名称.ini
+    ├── supervisord.conf
+    └── var
+        ├── log
+        │&nbsp;&nbsp; ├── 项目名称.log
+        │&nbsp;&nbsp; └── supervisord.log
+        ├── supervisord.pid
+        └── supervisor.sock
+</code></pre> 
+ <p>其中 <code>supervisord.conf</code> 是 Supervior 的配置文件，它会包含 <code>conf.d</code> 下的配置。<code>var</code> 目录下用于存放一些经常变动的文件，例如 <code>socket</code> 文件，<code>pid</code> 文件，<code>log</code> 下则存放日志文件。</p> 
+ <p>首先来建立上述的目录结构：</p> 
+ <pre class="hljs "><code>zerobit@server:$ mkdir -p ~/etc/supervisor/conf.d
+zerobit@server:$ mkdir -p ~/etc/supervisor/var/log
+</code></pre> 
+ <p>然后进入 <code>~/etc/supervisor</code> 目录下生成 Supervisor 的配置文件：</p> 
+ <pre class="hljs "><code>echo_supervisord_conf &gt; ~/etc/supervisor/supervisord.conf
+</code></pre> 
+ <p>修改 <code>supervisor.conf</code>，让 Supervisor 进程产生的一些文件生成到上面我们创建的目录下，而不是其默认指定的地方。</p> 
+ <p>首先找到 <code>[unix_http_server]</code> 版块，将 <code>file</code> 设置改为如下的值：</p> 
+ <pre class="hljs "><code>[unix_http_server]
+file=/home/zerobit/etc/supervisor/var/supervisor.sock
+</code></pre> 
+ <p>即让 <code>socket</code> 文件生成在 <code>~/etc/supervisor/var/</code> 目录下面。注意 supervisor 不支持将 <code>~</code> 展开为用户 <code>home</code> 目录，所以要用绝对路径指定。</p> 
+ <p>类似的修改 <code>[supervisord]</code> 板块下的 <code>logfile</code> 和 <code>pidfile</code> 文件的路径，还有 <code>user</code> 改为系统用户，这样 supervisor 启动的进程将以系统用户运行，避免可能的权限问题：</p> 
+ <pre class="hljs "><code>[supervisord]
+logfile=/home/zerobit/etc/supervisor/var/log/supervisord.log
+pidfile=/home/zerobit/etc/supervisor/var/supervisord.pid
+user=zerobit
+</code></pre> 
+ <p>还有 <code>[supervisorctl]</code> 板块下：</p> 
+ <pre class="hljs "><code>[supervisorctl]
+serverurl=unix:///home/zerobit/etc/supervisor/var/supervisor.sock
+</code></pre> 
+ <p><code>[include]</code> 版块，将 /home/yangxg/etc/supervisor/conf.d/ 目录下所有以 .ini 结尾的文件内容包含到配置中来，这样便于配置的模块化管理。在这里暂未使用。</p> 
+ <pre class="hljs "><code>;[include]
+;files = /home/songbd/etc/supervisor/conf.d/*.ini
+</code></pre> 
+ <p><code>[program]</code> 新建我们项目的配置：</p> 
+ <pre class="hljs "><code>[program:项目名称]
+command=pipenv run gunicorn 项目名称.wsgi -w 4 -k gthread -b 0:8000
+directory=/home/zerobit/apps/ge_crm/
+autostart=true
+autorestart=unexpected
+user=zerobit
+stdout_logfile=/home/zerobit/etc/supervisor/var/log/项目名称.log
+stderr_logfile=/home/zerobit/etc/supervisor/var/log/项目名称.log
+</code></pre> 
+ <p>说一下各项配置的含义：</p> 
+ <p><code>[program:项目名称]</code> 指明运行项目的进程，名为 <code>项目名称</code>。</p> 
+ <ul> 
+  <li><code>command</code> 为进程启动时执行的命令。</li> 
+  <li><code>directory</code> 指定执行命令时所在的目录。</li> 
+  <li><code>autostart</code> 随 Supervisor 启动自动启动进程。</li> 
+  <li><code>autorestart</code> 进程意外退出时重启。</li> 
+  <li><code>user</code> 进程运行的用户，防止权限问题。</li> 
+  <li><code>stdout_logfile，stderr_logfile</code> 日志输出文件。</li> 
+ </ul> 
+ <h2>启动 Supervisor</h2> 
+ <pre class="hljs "><code>zerobit@server:$ supervisord -c ~/etc/supervisord/supervisord.conf
+</code></pre> 
+ <p><code>-c</code> 指定 Supervisr 启动时的配置文件。</p> 
+ <p>进入 supervisorctl 进程管理控制台：</p> 
+ <pre class="hljs "><code>zerobit@server:$ supervisorctl -c ~/etc/supervisord/supervisord.conf
+</code></pre> 
+ <p>执行 <code>updat</code>e 命令更新配置文件并启动应用，输入 <code>?</code> 可查看命令帮助。</p> 
+ <p>用浏览器访问，可以看到服务已经正常启动了。</p> 
+ <h1>References</h1> 
+ <p>[1] <a href="http://jingyan.baidu.com/article/ab69b270b0ca3d2ca7189fdc.html" title="教你怎么使用 xshell 远程连接 linux 服务器">教你怎么使用 xshell 远程连接 linux 服务器</a></p> 
+ <p>[2] <a href="https://sqlite.org/download.html" title="sqlite 的官方下载地址">sqlite 的官方下载地址</a></p>  
+ 
+</div>
+																	</div>
+																	<div id="gradient"></div>
+																</div>
+																<div id="read-more" style="text-align: center;"></div>
+															</div>
+															<!-- 判断是不是模板 -->
+															<br>
+															<!-- 培训广告 -->
+																<blockquote>
+																	<p>
+																		<span style="font-weight: bold;">695856371<a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=169cadfbf2fdcc6acbf9ccb332ab69f07e5b5ee4a5eabfc52b7c6dc0438a8a95"><img border="0" src="./使用 Nginx + Gunicorn 部署_files/group.png" alt="Web网页设计师②群" title="Web网页设计师②群" class="ajax_gif"></a></span> |
+	<!-- 																	<span style="color: red;font-weight: bold;">172816590(满)<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=577c85f4111461519c509938378107086615a31f15407cb8592ec5bba270cf01"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="Web网页设计师①群" title="Web网页设计师①群"></a></span>, -->
+																		喜欢本站的朋友可以收藏本站,或者加入我们大家一起来交流技术!
+																	</p>
+																</blockquote>
+																<center>
+																	<a href="https://www.liangzl.com/get-article-detail-156797.html" target="_blank"><img alt="" src="./使用 Nginx + Gunicorn 部署_files/guanggao.jpg" class="ajax_gif"></a>
+																</center>
+															<!-- 引入SEO自我介绍页面 -->
+															<!-- <span style="font-size:14px ">
+	<strong>欢迎来到梁钟霖个人博客网站。本<a href="https://www.liangzl.com/get-article-detail-152.html" target="target">个人博客</a>网站提供最新的站长新闻,各种互联网资讯。
+	还提供个人博客模板,最新最全的java教程,java面试题。在此我将尽我最大所能将此个人博客网站做的最好!
+	谢谢大家,愿大家一起进步!</strong>
+</span> -->
+									                    </div>
+											        </div>
+											    </div>
+											</div>
+									        <div class="post-copyright m_hide">
+												<!-- 百度联盟 广告位：详情页尾部 -->
+													<!-- <script>
+													(function() {
+													    var s = "_" + Math.random().toString(36).slice(2);
+													    document.write('<div id="' + s + '"></div>');
+													    (window.slotbydup=window.slotbydup || []).push({
+													        id: '6186251',
+													        container: s,
+													        size: '760,90',
+													        display: 'inlay-fix'
+													    });
+													})();
+													</script>
+													百度联盟
+													<script src="https://dup.baidustatic.com/js/os.js"></script><br> -->
+										    	<!-- <a href="javaScritot:void(0)" style="font-weight: bold;" title="梁钟霖个人博客www.liangzl.com">转载原创文章请注明出处,转载至: 梁钟霖个人博客www.liangzl.com</a><br><br> -->
+										    </div>
+											<!-- <div class="post-related m_hide">
+									        	<ul class="related_box clearfix">
+									                <li class="related_box"  >
+									                    <div class="r_pic">
+									                    	<a href="javaScript:void(0)" title="使用 Nginx + Gunicorn 的方式将 django 应用部署到自己的服务器" >
+									                    	<img src="/editorImages/cawler/20170222193904_255.jpg" alt="图片" class="thumbnail" />
+									                    </a>
+									                    </div>
+									                </li>
+									            </ul>
+									        </div> -->
+											<ul class="bottom_meta clearfix">
+												<li class="mate-time fl"><i class="fa fa-clock-o"></i><a>2019-09-27 10:02:35</a></li>
+												<li class="mate-cat fl m_hide">
+													<i class="fa fa-bookmark"></i>
+													<a href="javaScript:void(0)" rel="category tag">梁钟霖</a>
+												</li>
+									            <li class="meta_tabs fl m_hide">
+									            	<i class="fa fa-tags"></i>
+															<a href="https://www.liangzl.com/get-main-page-6-%E6%85%A2%E7%94%9F%E6%B4%BB-.html" rel="tag">慢生活</a>
+															<a href="https://www.liangzl.com/get-main-page-7-%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83-.html" rel="tag">学无止境</a>
+															<a href="https://www.liangzl.com/get-main-page-8-%E6%A8%A1%E6%9D%BF%E4%B8%8B%E8%BD%BD-.html" rel="tag">模板下载</a>
+															<a href="https://www.liangzl.com/get-main-page-9-%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BA%93-.html" rel="tag">面试题库</a>
+															<a href="javaScript:void(0)" rel="tag">互联网的一些事</a>
+									            </li>
+									            <li class="meta_like fr">
+													<span style="color: red;font-weight: bold;">点赞  →&nbsp;<a href="javaScript:savePraise()" class="jm-post-like" data-post_id="3392" title="Like">
+														 <i class="fa fa-heart-o"></i><span id="praiseCount">0</span>
+													</a>                                                    
+									            </span></li>
+									        </ul>
+									 	</div>
+									</article>
+									<!-- es搜索相关推荐 -->
+											<article class="post type-post status-publish format-aside hentry category-wordpress category-code tag-jquery tag-wordpress tag-35 post_format-post-format-aside shadow">
+												<div class="post-wrap">
+													<div class="post-inner">
+														<div class="post-body">
+															<header>
+																<h2 class="entry-title"><a style="color: black;font-weight: bold;" target="_blank" href="https://www.liangzl.com/get-article-detail-122555.html" title="在 IntelliJ IDEA 中&lt;span style=&#39;color:red&#39;&gt;部&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;署&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;应&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;用&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;到&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;服&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;务&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;器&lt;/span&gt;">在 IntelliJ IDEA 中<span style="color:red">部</span><span style="color:red">署</span><span style="color:red">应</span><span style="color:red">用</span><span style="color:red">到</span><span style="color:red">服</span><span style="color:red">务</span><span style="color:red">器</span></a></h2>
+															</header>
+															<div class="post-content" style="height: 25px;">
+																<div class="content clearfix">
+																	<div class="excerpt-more">
+																		<p>在 IntelliJ IDEA 中部署应用到服务器</p>
+																		<div class="read_more">
+																			<a href="https://www.liangzl.com/get-article-detail-122555.html" target="_blank">阅读更多</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+											<article class="post type-post status-publish format-aside hentry category-wordpress category-code tag-jquery tag-wordpress tag-35 post_format-post-format-aside shadow">
+												<div class="post-wrap">
+													<div class="post-inner">
+														<div class="post-body">
+															<header>
+																<h2 class="entry-title"><a style="color: black;font-weight: bold;" target="_blank" href="https://www.liangzl.com/get-article-detail-15017.html" title="centos下&lt;span style=&#39;color:red&#39;&gt;使&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;用&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;nginx&lt;/span&gt;+uwsgi &lt;span style=&#39;color:red&#39;&gt;部&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;署&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;django&lt;/span&gt;">centos下<span style="color:red">使</span><span style="color:red">用</span><span style="color:red">nginx</span>+uwsgi <span style="color:red">部</span><span style="color:red">署</span><span style="color:red">django</span></a></h2>
+															</header>
+															<div class="post-content" style="height: 25px;">
+																<div class="content clearfix">
+																	<div class="excerpt-more">
+																		<p>centos下使用nginx+uwsgi 部署django</p>
+																		<div class="read_more">
+																			<a href="https://www.liangzl.com/get-article-detail-15017.html" target="_blank">阅读更多</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+											<article class="post type-post status-publish format-aside hentry category-wordpress category-code tag-jquery tag-wordpress tag-35 post_format-post-format-aside shadow">
+												<div class="post-wrap">
+													<div class="post-inner">
+														<div class="post-body">
+															<header>
+																<h2 class="entry-title"><a style="color: black;font-weight: bold;" target="_blank" href="https://www.liangzl.com/get-article-detail-143681.html" title="&lt;span style=&#39;color:red&#39;&gt;将&lt;/span&gt;Web&lt;span style=&#39;color:red&#39;&gt;应&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;用&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;部&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;署&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;到&lt;/span&gt;Tomcat&lt;span style=&#39;color:red&#39;&gt;的&lt;/span&gt;三种&lt;span style=&#39;color:red&#39;&gt;方&lt;/span&gt;法"><span style="color:red">将</span>Web<span style="color:red">应</span><span style="color:red">用</span><span style="color:red">部</span><span style="color:red">署</span><span style="color:red">到</span>Tomcat<span style="color:red">的</span>三种<span style="color:red">方</span>法</a></h2>
+															</header>
+															<div class="post-content" style="height: 25px;">
+																<div class="content clearfix">
+																	<div class="excerpt-more">
+																		<p>将Web应用部署到Tomcat的三种方法</p>
+																		<div class="read_more">
+																			<a href="https://www.liangzl.com/get-article-detail-143681.html" target="_blank">阅读更多</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+											<article class="post type-post status-publish format-aside hentry category-wordpress category-code tag-jquery tag-wordpress tag-35 post_format-post-format-aside shadow">
+												<div class="post-wrap">
+													<div class="post-inner">
+														<div class="post-body">
+															<header>
+																<h2 class="entry-title"><a style="color: black;font-weight: bold;" target="_blank" href="https://www.liangzl.com/get-article-detail-124835.html" title="在 IntelliJ IDEA 中&lt;span style=&#39;color:red&#39;&gt;部&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;署&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;应&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;用&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;到&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;服&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;务&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;器&lt;/span&gt;(Eclipse)">在 IntelliJ IDEA 中<span style="color:red">部</span><span style="color:red">署</span><span style="color:red">应</span><span style="color:red">用</span><span style="color:red">到</span><span style="color:red">服</span><span style="color:red">务</span><span style="color:red">器</span>(Eclipse)</a></h2>
+															</header>
+															<div class="post-content" style="height: 25px;">
+																<div class="content clearfix">
+																	<div class="excerpt-more">
+																		<p>在 IntelliJ IDEA 中部署应用到服务器(Eclipse)</p>
+																		<div class="read_more">
+																			<a href="https://www.liangzl.com/get-article-detail-124835.html" target="_blank">阅读更多</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+											<article class="post type-post status-publish format-aside hentry category-wordpress category-code tag-jquery tag-wordpress tag-35 post_format-post-format-aside shadow">
+												<div class="post-wrap">
+													<div class="post-inner">
+														<div class="post-body">
+															<header>
+																<h2 class="entry-title"><a style="color: black;font-weight: bold;" target="_blank" href="https://www.liangzl.com/get-article-detail-122760.html" title="Cloud Toolkit &lt;span style=&#39;color:red&#39;&gt;部&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;署&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;应&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;用&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;到&lt;/span&gt;阿里云轻量&lt;span style=&#39;color:red&#39;&gt;应&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;用&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;服&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;务&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;器&lt;/span&gt;">Cloud Toolkit <span style="color:red">部</span><span style="color:red">署</span><span style="color:red">应</span><span style="color:red">用</span><span style="color:red">到</span>阿里云轻量<span style="color:red">应</span><span style="color:red">用</span><span style="color:red">服</span><span style="color:red">务</span><span style="color:red">器</span></a></h2>
+															</header>
+															<div class="post-content" style="height: 25px;">
+																<div class="content clearfix">
+																	<div class="excerpt-more">
+																		<p>Cloud Toolkit 部署应用到阿里云轻量应用服务器</p>
+																		<div class="read_more">
+																			<a href="https://www.liangzl.com/get-article-detail-122760.html" target="_blank">阅读更多</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+											<article class="post type-post status-publish format-aside hentry category-wordpress category-code tag-jquery tag-wordpress tag-35 post_format-post-format-aside shadow">
+												<div class="post-wrap">
+													<div class="post-inner">
+														<div class="post-body">
+															<header>
+																<h2 class="entry-title"><a style="color: black;font-weight: bold;" target="_blank" href="https://www.liangzl.com/get-article-detail-36818.html" title="uWSGI&lt;span style=&#39;color:red&#39;&gt;部&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;署&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;django&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;应&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;用&lt;/span&gt;">uWSGI<span style="color:red">部</span><span style="color:red">署</span><span style="color:red">django</span><span style="color:red">应</span><span style="color:red">用</span></a></h2>
+															</header>
+															<div class="post-content" style="height: 25px;">
+																<div class="content clearfix">
+																	<div class="excerpt-more">
+																		<p>uWSGI部署django应用</p>
+																		<div class="read_more">
+																			<a href="https://www.liangzl.com/get-article-detail-36818.html" target="_blank">阅读更多</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+											<article class="post type-post status-publish format-aside hentry category-wordpress category-code tag-jquery tag-wordpress tag-35 post_format-post-format-aside shadow">
+												<div class="post-wrap">
+													<div class="post-inner">
+														<div class="post-body">
+															<header>
+																<h2 class="entry-title"><a style="color: black;font-weight: bold;" target="_blank" href="https://www.liangzl.com/get-article-detail-6340.html" title="&lt;span style=&#39;color:red&#39;&gt;Nginx&lt;/span&gt;官&lt;span style=&#39;color:red&#39;&gt;方&lt;/span&gt;推出&lt;span style=&#39;color:red&#39;&gt;的&lt;/span&gt;web&lt;span style=&#39;color:red&#39;&gt;应&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;用&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;服&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;务&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;器&lt;/span&gt;-&lt;span style=&#39;color:red&#39;&gt;nginx&lt;/span&gt; unit"><span style="color:red">Nginx</span>官<span style="color:red">方</span>推出<span style="color:red">的</span>web<span style="color:red">应</span><span style="color:red">用</span><span style="color:red">服</span><span style="color:red">务</span><span style="color:red">器</span>-<span style="color:red">nginx</span> unit</a></h2>
+															</header>
+															<div class="post-content" style="height: 25px;">
+																<div class="content clearfix">
+																	<div class="excerpt-more">
+																		<p>Nginx官方推出的web应用服务器-nginx unit</p>
+																		<div class="read_more">
+																			<a href="https://www.liangzl.com/get-article-detail-6340.html" target="_blank">阅读更多</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+											<article class="post type-post status-publish format-aside hentry category-wordpress category-code tag-jquery tag-wordpress tag-35 post_format-post-format-aside shadow">
+												<div class="post-wrap">
+													<div class="post-inner">
+														<div class="post-body">
+															<header>
+																<h2 class="entry-title"><a style="color: black;font-weight: bold;" target="_blank" href="https://www.liangzl.com/get-article-detail-36439.html" title="如何在 Intellij IDEA 更高效地&lt;span style=&#39;color:red&#39;&gt;将&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;应&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;用&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;部&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;署&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;到&lt;/span&gt;容&lt;span style=&#39;color:red&#39;&gt;器&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;服&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;务&lt;/span&gt; Kubernetes">如何在 Intellij IDEA 更高效地<span style="color:red">将</span><span style="color:red">应</span><span style="color:red">用</span><span style="color:red">部</span><span style="color:red">署</span><span style="color:red">到</span>容<span style="color:red">器</span><span style="color:red">服</span><span style="color:red">务</span> Kubernetes</a></h2>
+															</header>
+															<div class="post-content" style="height: 25px;">
+																<div class="content clearfix">
+																	<div class="excerpt-more">
+																		<p>如何在 Intellij IDEA 更高效地将应用部署到容器服务 Kubernetes</p>
+																		<div class="read_more">
+																			<a href="https://www.liangzl.com/get-article-detail-36439.html" target="_blank">阅读更多</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+											<article class="post type-post status-publish format-aside hentry category-wordpress category-code tag-jquery tag-wordpress tag-35 post_format-post-format-aside shadow">
+												<div class="post-wrap">
+													<div class="post-inner">
+														<div class="post-body">
+															<header>
+																<h2 class="entry-title"><a style="color: black;font-weight: bold;" target="_blank" href="https://www.liangzl.com/get-article-detail-14702.html" title="Shell脚本--&lt;span style=&#39;color:red&#39;&gt;自&lt;/span&gt;动&lt;span style=&#39;color:red&#39;&gt;部&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;署&lt;/span&gt;tomcat&lt;span style=&#39;color:red&#39;&gt;应&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;用&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;服&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;务&lt;/span&gt;">Shell脚本--<span style="color:red">自</span>动<span style="color:red">部</span><span style="color:red">署</span>tomcat<span style="color:red">应</span><span style="color:red">用</span><span style="color:red">服</span><span style="color:red">务</span></a></h2>
+															</header>
+															<div class="post-content" style="height: 25px;">
+																<div class="content clearfix">
+																	<div class="excerpt-more">
+																		<p>Shell脚本--自动部署tomcat应用服务</p>
+																		<div class="read_more">
+																			<a href="https://www.liangzl.com/get-article-detail-14702.html" target="_blank">阅读更多</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+											<article class="post type-post status-publish format-aside hentry category-wordpress category-code tag-jquery tag-wordpress tag-35 post_format-post-format-aside shadow">
+												<div class="post-wrap">
+													<div class="post-inner">
+														<div class="post-body">
+															<header>
+																<h2 class="entry-title"><a style="color: black;font-weight: bold;" target="_blank" href="https://www.liangzl.com/get-article-detail-5582.html" title="Thinkphp&lt;span style=&#39;color:red&#39;&gt;部&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;署&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;到&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;服&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;务&lt;/span&gt;&lt;span style=&#39;color:red&#39;&gt;器&lt;/span&gt;">Thinkphp<span style="color:red">部</span><span style="color:red">署</span><span style="color:red">到</span><span style="color:red">服</span><span style="color:red">务</span><span style="color:red">器</span></a></h2>
+															</header>
+															<div class="post-content" style="height: 25px;">
+																<div class="content clearfix">
+																	<div class="excerpt-more">
+																		<p>Thinkphp部署到服务器</p>
+																		<div class="read_more">
+																			<a href="https://www.liangzl.com/get-article-detail-5582.html" target="_blank">阅读更多</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+								</div>
+<!-- 评论 -->
+<div id="comment-jump" class="comments shadow">
+	<div id="comments" class="clearfix">
+		<h3 id="comments-title">0条评论</h3>
+		<div id="loading-comments" class="hide"><span><i class="fa fa-spinner fa-pulse"></i> Loading...</span></div>
+			<ul class="commentlist comdot" id="commentTarget">
+			<div class="clearfix"></div>
+		</ul>
+		<br>
+		<br>
+<!-- 		<div id="respond" class="comment-respond"> -->
+<!-- 			<h3 id="reply-title" class="comment-reply-title">发表评论 <small><div id="cancel-comment-reply-link" style="display:none;"><i class="icon-remove-sign"></i> </div></small></h3> -->
+<!-- 			<form  method="post" id="commentform" class="comment-form"> -->
+<!-- 				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span> 必填项已用<span class="required">*</span>标注</p> -->
+<!-- 				<p class="comment-form-author"><label for="author">姓名 <span class="required">*</span></label> <input id="author" name="author" type="text" value="" placeholder="请输入您的名字!" size="30" maxlength="10" aria-required='true' required='required' /></p> -->
+<!-- 				<p class="comment-form-email"><label for="email">电子邮件 <span class="required">*</span></label> <input id="email" name="email" type="text" value="" placeholder="博主回复你会通知到此邮箱!" size="30" maxlength="30" aria-describedby="email-notes" aria-required='true' required='required' /></p> -->
+<!-- 				<p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" /></p> -->
+<!-- 				<p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" placeholder="上述电子邮件地址不会被公开,只作为博主回复联系方式!" required="required"></textarea></p> -->
+<!-- 				<p class="form-submit"> -->
+<!-- 					<input name="submit" type="button" onclick="saveComment()" id="submit" class="submit" value="发表评论" />  -->
+<!-- 				</p> -->
+<!-- 			</form> -->
+<!-- 		</div> -->
+		<!-- #respond -->
+	</div>
+</div>							</div>
+						</div>
+					</div>
+					<!--内容主体 end-->
+					<!--phone端left star-->
+					<!--phone端left end-->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--底部-->
+<!--底部-->
+<footer id="footer">
+	<div class="footer-end">
+		<div class="container clearfix">
+			© CopyRight© 2016-2020版权所有  ICP备案号：<a href="http://beian.miit.gov.cn/state/outPortal/loginPortal.action" rel="nofollow" target="_blank">闽ICP备16034451号 </a>
+			<a href="javaScript:void(0)">商务合作QQ:419400980 </a><a style="color: blue" href="javaScript:void(0)"></a><a href="https://www.liangzl.com/get-article-detail.html?id=158" style="color: red"> 免责声明</a><script type="text/javascript" src="./使用 Nginx + Gunicorn 部署_files/z_stat.php"></script><script src="./使用 Nginx + Gunicorn 部署_files/core.php" charset="utf-8" type="text/javascript"></script><a href="https://www.cnzz.com/stat/website.php?web_id=1277746409" target="_blank" title="站长统计">站长统计</a>
+		</div>
+	</div>
+</footer>	<!--返回顶部-->
+<!--返回顶部-->
+<div id="footer_btn" class="m_hide" style="display: block;">
+	<ul>
+		<li>
+			<a href="https://www.liangzl.com/get-article-detail-146864.html#totop" class="scrolltotop icon">
+				<i class="hand fa fa-chevron-up"></i>
+			</a>
+		</li>
+<!-- 		<li> -->
+<!-- 			<a class="icon" href="javascript:void(0)"> -->
+<!-- 				<i class="fa fa-qrcode"></i> -->
+<!-- 			</a> -->
+<!-- 			<div class="show-box"> -->
+<!-- 				<div class="wx-show footer-show"> -->
+<!-- 					<img src="img/blog/qrcode.png"> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</li> -->
+	</ul>
+</div>	<!--皮肤-->
+<div class="skin_switcher m_hide">
+	<div class="skin_header clearfix">
+		<div class="container clearfix">
+			<span class="fl">自定义皮肤</span>
+<!-- 			<span class="skin_fx layout_btn hand fl" date-fx="layout"> -->
+<!-- 				<i class="fa fa-toggle-on" aria-hidden="true"></i>单栏布局 -->
+<!-- 			</span> -->
+<!-- 			<span class="skin_fx glass_btn hand fl" date-fx="glass"> -->
+<!-- 				<i class="fa fa-toggle-on" aria-hidden="true"></i>玻璃菜单 -->
+<!-- 			</span> -->
+			<span class="skin_fx main_btn hand fl" date-fx="main">
+				<i class="fa fa-toggle-off" aria-hidden="true"></i>主体内容背景
+			</span>
+			<span class="col_skin hand fr">
+				<i class="fa fa-times"></i>
+			</span>
+		</div>
+	</div>
+	<div class="container skin_list">
+		<ul class="clearfix">
+			<li data-banner=" #d9d3c1 url(&#39;img/blog/bigbannerpic_01.png&#39;) no-repeat center -10px" class="current" data-body="#d9d3c1" data-menu="i_glass_w">
+				<img src="./使用 Nginx + Gunicorn 部署_files/smallbannerpic_01.png" class="">
+				<span class="text-ellipsis">闹市重声(默认)</span>
+			</li>
+			<li data-banner=" #0f0f11 url(&#39;img/blog/bigbannerpic_02.png&#39;) no-repeat center -10px" data-body=" #0f0f11 url(&#39;&#39;)  center center fixed" data-menu="i_glass_b">
+				<img src="./使用 Nginx + Gunicorn 部署_files/smallbannerpic_02.png" height="96" width="96" class="">
+				<span class="text-ellipsis">守望先锋</span>
+			</li>
+			<li data-banner=" #1f160f url(&#39;img/blog/bigbannerpic_03.png&#39;) no-repeat center -10px" data-body=" #1f160f url(&#39;&#39;)  center center fixed" data-menu="i_glass_w">
+				<img src="./使用 Nginx + Gunicorn 部署_files/smallbannerpic_03.png" height="96" width="96" class="">
+				<span class="text-ellipsis">水滴玻璃</span>
+			</li>
+			<li data-banner=" #ffffff url(&#39;img/blog/bigbodypic_01.jpg&#39;) no-repeat center -10px" data-body=" #ffffff url(&#39;img/blog/bigbodypic_01.jpg&#39;)  center center fixed" data-menu="i_glass_w">
+				<img src="./使用 Nginx + Gunicorn 部署_files/smallbodypic_01.jpg" height="96" width="96" class="">
+				<span class="text-ellipsis">黄金分割</span>
+			</li>
+			<li data-banner=" #edc28d url(&#39;img/blog/bigbannerpic_04.png&#39;) no-repeat center -10px" data-body=" #edc28d url(&#39;&#39;)  center center fixed" data-menu="i_glass_w">
+				<img src="./使用 Nginx + Gunicorn 部署_files/smallbannerpic_04.png" height="96" width="96" class="">
+				<span class="text-ellipsis">黄昏花丛</span>
+			</li>
+			<li data-banner=" #faf4e4 url(&#39;img/blog/bigbannerpic_05.png&#39;) no-repeat center -10px" data-body=" #faf4e4 url(&#39;&#39;)  center center " data-menu="i_glass_w">
+				<img src="./使用 Nginx + Gunicorn 部署_files/smallbannerpic_05.png" height="96" width="96" class="">
+				<span class="text-ellipsis">我的后宫</span>
+			</li>
+			<li data-banner=" #ede5d8 url(&#39;img/blog/bigbannerpic_06.png&#39;) no-repeat center -10px" data-body=" #ede5d8 url(&#39;&#39;)  center center fixed" data-menu="i_glass_w">
+				<img src="./使用 Nginx + Gunicorn 部署_files/smallbannerpic_06.png" height="96" width="96" class="">
+				<span class="text-ellipsis">死萝莉控</span>
+			</li>
+			<li data-banner=" #ffeed9 url(&#39;img/blog/bigbannerpic_07.png&#39;) no-repeat center -10px" data-body=" #ffeed9 url(&#39;&#39;)  center center fixed" data-menu="i_glass_w">
+				<img src="./使用 Nginx + Gunicorn 部署_files/smallbannerpic_07.png" height="96" width="96" class="">
+				<span class="text-ellipsis">末花未名</span>
+			</li>
+		</ul>
+	</div>
+</div>	<!--登录-->
+<!--登录-->
+<div class="cd-user-modal login-modal" style="box-sizing: border-box">
+	<a href="https://www.liangzl.com/get-article-detail-146864.html#" class="cd-close-form"></a>
+	<div class="cd-user-modal-container">
+		<div class="login-img"></div>
+		<div class="login-form" id="login-part">
+        	<center style="margin-top: 15px;font-weight: bold;font-size: large;">登录梁钟霖个人博客</center>
+			<form name="login-form" id="login-form">
+				<p class="login-links"></p>
+				<p class="login-username">
+					<input type="text" name="log" id="loginEmail" class="input user_login" maxlength="20" placeholder="请输入邮箱...">
+				</p>
+				<p class="login-password">
+					<input type="password" name="pwd" id="loginPassword" class="input user_login" maxlength="20" placeholder="请输入密码...">
+				</p>
+				<p class="login-password">
+					<input type="text" name="log" id="loginCode" class="input user_login" onkeydown="if(event.keyCode==13)doLogin()" maxlength="4" placeholder="请输入验证码..."><img src="./使用 Nginx + Gunicorn 部署_files/image_code.html" id="imgCodeLogin" onclick="reloadImgCodeLogin()" style="color:#1a98fc;border: none;background: none;position: absolute;right: 0;text-align: center;line-height: 35px;" class="ajax_gif">
+				</p>
+				<p class="login-submit">
+					<input type="button" name="wp-submit" id="wp-submit" onclick="doLogin()" class="button-primary" value="登录">
+					<input type="hidden" name="redirect_to" value="#">
+				</p>
+			</form>
+			<p class="login-links clearfix">
+				<span class="fl">
+<!--                     <a href="#">忘记密码</a> -->
+                </span>
+			</p>
+		</div>
+		
+		<div class="pay-part" id="pay-part">
+        	<center style="margin-top: 10px;font-weight: bold;font-size: large;">打开<span style="color: red">支付宝</span>扫码付款购买视频教程</center>
+        	<center style="font-weight: bold;">遇到问题联系客服QQ：419400980</center>
+			<p class="login-links" style="padding: 0px"></p>
+			<center><img alt="" id="payImg" src="https://www.liangzl.com/get-article-detail-146864.html" class="ajax_gif"></center>
+		</div>
+		
+		<div class="reg-form" id="reg-part">
+        	<center style="margin-top: 15px;font-weight: bold;font-size: large;">注册梁钟霖个人博客</center>
+			<form name="login-form" id="login-form1">
+				<p class="login-links"></p>
+				<p class="login-username">
+					<input type="text" name="log" id="regEmail" class="input user_login" maxlength="20" onkeyup="checkEmail()" placeholder="请输入邮箱...">
+				</p>
+				<p class="login-username">
+					<input type="text" name="log" id="regEmailCode" class="input user_login" maxlength="6" placeholder="请输入邮箱验证码..."><button onclick="sendEmailCode()" disabled="disabled" id="sendCode" style="color:#bfbfbf;border: none;background: none;position: absolute;right: 0;text-align: center;line-height: 35px;">发送验证码</button>
+				</p>
+				<p class="login-username">
+					<input type="password" name="pwd" id="regPassword1" class="input user_login" maxlength="20" placeholder="请输入密码...">
+				</p>
+				<p class="login-password">
+					<input type="password" name="pwd" id="regPassword2" class="input user_login" maxlength="20" placeholder="确认密码...">
+				</p>
+				<p class="login-password">
+					<input type="text" name="log" id="regCode" onkeydown="if(event.keyCode==13)reg()" class="input user_login" maxlength="4" placeholder="请输入验证码..."><img src="./使用 Nginx + Gunicorn 部署_files/image_code.html" id="imgCode" onclick="reloadImgCode()" style="color:#1a98fc;border: none;background: none;position: absolute;right: 0;text-align: center;line-height: 35px;" class="ajax_gif">
+				</p>
+				<p class="login-submit">
+					<input type="button" name="wp-submit" id="wp-submit1" class="button-primary" value="注册" onclick="reg()">
+					<input type="hidden" name="redirect_to" value="#">
+				</p>
+			</form>
+			<p class="login-links clearfix">
+				<span class="fl">
+<!--                     <a href="#">忘记密码</a> -->
+                </span>
+			</p>
+		</div>
+	</div>
+</div>
+<style>
+.login-wrap-box .title {
+    position: relative;
+    color: #363940;
+    font-size: 1pc;
+    border-bottom: 1px solid #e8eaec;
+    padding: 14px 1pc;
+    line-height: 1;
+}
+</style>	<!--等待界面-->
+<div id="loadPage" style="display:none;position:absolute; left:-1px; top:1px; width:100%; height:100%;position: fixed;moz-opacity: 0.3;filter:Alpha(opacity=50); opacity: 0.3; background-color:#555; z-index:1000;">
+	<img src="./使用 Nginx + Gunicorn 部署_files/wait.gif" style="position: fixed;left: 48%;top:35%;" class="ajax_gif">
+</div>	<script src="./使用 Nginx + Gunicorn 部署_files/layer.js(1).下载"></script>
+	<script type="text/javascript" src="./使用 Nginx + Gunicorn 部署_files/plugins.js.下载"></script>
+	<script type="text/javascript" src="./使用 Nginx + Gunicorn 部署_files/custom.js.下载"></script><div id="mouse-tooltip" class="mouse-tooltip mouse-tooltip--hidden" style="left: 1110px; top: 142px;">茶馆、岛、慵懒的猫...都是美好的时光...</div>
+	<script type="text/javascript" src="./使用 Nginx + Gunicorn 部署_files/common.js.下载"></script>
+	<script type="text/javascript" src="./使用 Nginx + Gunicorn 部署_files/articleCommon.js.下载"></script>
+	<script type="text/javascript">
+		jQuery(window).load(function() {
+			jQuery('.nivoSlider').nivoSlider({
+				effect: 'fold',
+				boxCols: 10,
+				boxRows: 5,
+				animSpeed: 300,
+				prevText: '',
+				nextText: '',
+			});
+		});
+		
+		/** 文章详情折叠   **/
+		$(function() {
+				var slideHeight = 350; // px
+			var defHeight = $('#wrap').height();
+			var articleId = 146864;
+//  			if (articleId != 141238 && articleId != 156797) {
+			if(false) {}
+				if (defHeight >= slideHeight) {
+					$('#wrap').css('height', slideHeight + 'px');
+					$('#read-more').append('<a style="color:red" href="#">点击查看全文 ↓</a>');
+					$('#read-more').click(function() {
+						var curHeight = $('#wrap').height();
+						if (curHeight == slideHeight) {
+							$('#wrap').animate({
+								height : defHeight
+							}, "normal");
+							$('#read-more a').html('点击隐藏 ↑');
+							$('#gradient').fadeOut();
+						} else {
+							$('#wrap').animate({
+								height : slideHeight
+							}, "normal");
+							$('#read-more a').html('点击查看全文 ↓');
+							$('#gradient').fadeIn();
+						}
+						return false;
+					});
+				}
+			}
+		});
+	</script>
+
+<script id="sozz" src="./使用 Nginx + Gunicorn 部署_files/11.0.1.js.下载"></script></body></html>
