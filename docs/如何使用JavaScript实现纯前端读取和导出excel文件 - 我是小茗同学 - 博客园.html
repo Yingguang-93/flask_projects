@@ -1,0 +1,3281 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://www.cnblogs.com/liuxianan/p/js-excel.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="js xlsx 介绍 由 &amp;quot;SheetJS&amp;quot; 出品的 是一款非常方便的只需要纯JS即可读取和导出excel的工具库，功能强大，支持格式众多，支持 、`xlsx ods xlsx`格">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="https://common.cnblogs.com/favicon.ico?v=20200522" type="image/x-icon">
+    
+    <link rel="stylesheet" href="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/bundle-blacklowkey.min.css">
+    <link type="text/css" rel="stylesheet" href="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/custom.css">
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/bundle-blacklowkey-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/liuxianan/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/liuxianan/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/liuxianan/wlwmanifest.xml">
+    <script async="" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/analytics.js.下载"></script><script src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 117633;
+        var currentBlogApp = 'liuxianan';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var skinName = 'BlackLowKey';
+    </script>
+    
+    
+    
+</head>
+<body>
+    <a name="top"></a>
+    <div id="page_begin_html">
+        <a href="https://github.com/sxei" target="_blank" style="position: absolute;right: 0;  top: 0; z-index: 100;">
+    <img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/git-link.gif" alt="Fork me on github" style="">
+</a>
+    </div>
+    
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/liuxianan/"><img id="blogLogo" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/logo.gif" alt="返回主页"></a>		
+		
+<!--done-->
+<h1 class="bounceInLeft animated"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/liuxianan/">小茗同学的博客园</a>
+</h1>
+<h2 class="bounceInRight animated">
+个人网站：<a href="http://haoji.me/" target="_blank">http://haoji.me(好记么)</a>
+</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/liuxianan/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%88%91%E6%98%AF%E5%B0%8F%E8%8C%97%E5%90%8C%E5%AD%A6">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/liuxianan/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			
+			<span id="stats_post_count">随笔 - 
+69&nbsp; </span>
+<span id="stats_article_count">文章 - 
+0&nbsp; </span>
+<span id="stats-comment_count">评论 - 
+928</span>
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/liuxianan/p/js-excel.html">
+    <span>如何使用JavaScript实现纯前端读取和导出excel文件</span>
+    
+
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+    <h1 id="js-xlsx-介绍">js-xlsx 介绍</h1>
+<p>由<a href="https://sheetjs.com/" target="_blank">SheetJS</a>出品的<code>js-xlsx</code>是一款非常方便的只需要纯JS即可读取和导出excel的工具库，功能强大，支持格式众多，支持<code>xls</code>、<code>xlsx</code>、<code>ods</code>(一种OpenOffice专有表格文件格式)等十几种格式。本文全部都是以<code>xlsx</code>格式为例。</p>
+<ul>
+<li>官方github：<a href="https://github.com/SheetJS/js-xlsx" target="_blank">https://github.com/SheetJS/js-xlsx</a></li>
+<li>本文配套demo在线演示地址：<a href="http://demo.haoji.me/2017/02/08-js-xlsx/" target="_blank">http://demo.haoji.me/2017/02/08-js-xlsx/</a></li>
+<li>本文同步首发于我的<a href="http://blog.haoji.me/js-excel.html" target="_blank">个人博客</a>和<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html" target="_blank">博客园</a>。</li>
+</ul>
+<h2 id="兼容性">1.1. 兼容性</h2>
+<p>兼容性如下图：</p>
+<p><img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/352797-20180706101048813-1241756148.png" alt="" loading="lazy"></p>
+<h2 id="如何使用">1.2. 如何使用</h2>
+<p><code>dist</code>目录下有很多个JS文件，一般情况下用<code>xlsx.core.min.js</code>就够了，<code>xlsx.full.min.js</code>则是包含了所有功能模块。</p>
+<p><img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/352797-20180706101107365-1351805802.png" alt="" loading="lazy"></p>
+<p>直接<code>script</code>标签引入即可：</p>
+<pre><code class="language-html hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"./js/xlsx.core.min.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h1 id="读取excel">读取excel</h1>
+<p>读取excel主要是通过<code>XLSX.read(data, {type: type});</code>方法来实现，返回一个叫<code>WorkBook</code>的对象，type主要取值如下：</p>
+<ul>
+<li><code>base64</code>: 以base64方式读取；</li>
+<li><code>binary</code>: BinaryString格式(byte n is data.charCodeAt(n))</li>
+<li><code>string</code>: UTF8编码的字符串；</li>
+<li><code>buffer</code>: nodejs Buffer；</li>
+<li><code>array</code>: Uint8Array，8位无符号数组；</li>
+<li><code>file</code>: 文件的路径（仅nodejs下支持）；</li>
+</ul>
+<h2 id="获取workbook对象">2.1. 获取workbook对象</h2>
+<h3 id="读取本地文件">2.1.1. 读取本地文件</h3>
+<p>直接上代码：</p>
+<pre><code class="language-js hljs javascript"><span class="hljs-comment">// 读取本地excel文件</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readWorkbookFromLocalFile</span>(<span class="hljs-params">file, callback</span>) </span>{
+	<span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> FileReader();
+	reader.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+		<span class="hljs-keyword">var</span> data = e.target.result;
+		<span class="hljs-keyword">var</span> workbook = XLSX.read(data, {<span class="hljs-attr">type</span>: <span class="hljs-string">'binary'</span>});
+		<span class="hljs-keyword">if</span>(callback) callback(workbook);
+	};
+	reader.readAsBinaryString(file);
+}
+</code></pre>
+<h3 id="读取网络文件">2.1.2. 读取网络文件</h3>
+<pre><code class="language-js hljs javascript"><span class="hljs-comment">// 从网络上读取某个excel文件，url必须同域，否则报错</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readWorkbookFromRemoteFile</span>(<span class="hljs-params">url, callback</span>) </span>{
+	<span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
+	xhr.open(<span class="hljs-string">'get'</span>, url, <span class="hljs-literal">true</span>);
+	xhr.responseType = <span class="hljs-string">'arraybuffer'</span>;
+	xhr.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+		<span class="hljs-keyword">if</span>(xhr.status == <span class="hljs-number">200</span>) {
+			<span class="hljs-keyword">var</span> data = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint8Array</span>(xhr.response)
+			<span class="hljs-keyword">var</span> workbook = XLSX.read(data, {<span class="hljs-attr">type</span>: <span class="hljs-string">'array'</span>});
+			<span class="hljs-keyword">if</span>(callback) callback(workbook);
+		}
+	};
+	xhr.send();
+}
+</code></pre>
+<h2 id="详解-workbook">2.2. 详解 workbook</h2>
+<h3 id="workbook-object">2.2.1. Workbook Object</h3>
+<p><code>workbook</code>里面有什么东西呢，我们打印出来看一下：</p>
+<p><img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/352797-20180706101133858-640072825.png" alt="" loading="lazy"></p>
+<p>可以看到，<code>SheetNames</code>里面保存了所有的sheet名字，然后<code>Sheets</code>则保存了每个sheet的具体内容（我们称之为<code>Sheet Object</code>）。每一个<code>sheet</code>是通过类似<code>A1</code>这样的键值保存每个单元格的内容，我们称之为单元格对象（<code>Cell Object</code>）：</p>
+<p><img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/352797-20180706101155780-1647439178.png" alt="" loading="lazy"></p>
+<h3 id="sheet-object">2.2.2. Sheet Object</h3>
+<p>每一个<code>Sheet Object</code>表示一张表格，只要不是<code>!</code>开头的都表示普通<code>cell</code>，否则，表示一些特殊含义，具体如下：</p>
+<ul>
+<li><code>sheet['!ref']</code>：表示所有单元格的范围，例如从A1到F8则记录为<code>A1:F8</code>；</li>
+<li><code>sheet[!merges]</code>：存放一些单元格合并信息，是一个数组，每个数组由包含<code>s</code>和<code>e</code>构成的对象组成，<code>s</code>表示开始，<code>e</code>表示结束，<code>r</code>表示行，<code>c</code>表示列；</li>
+<li>等等；</li>
+</ul>
+<p>关于单元格合并，看懂下面这张图基本上就没问题了：</p>
+<p><img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/352797-20180706101220647-923643638.png" alt="" loading="lazy"></p>
+<p>结果如下：</p>
+<p><img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/352797-20180706101325362-1180321806.png" alt="" loading="lazy"></p>
+<h3 id="单元格对象">2.2.3. 单元格对象</h3>
+<p>每一个单元格是一个对象（<code>Cell Object</code>），主要有<code>t</code>、<code>v</code>、<code>r</code>、<code>h</code>、<code>w</code>等字段（详见<a href="https://github.com/SheetJS/js-xlsx#cell-object" target="_blank">这里</a>）：</p>
+<ul>
+<li>t：表示内容类型，<code>s</code>表示string类型，<code>n</code>表示number类型，<code>b</code>表示boolean类型，<code>d</code>表示date类型，等等</li>
+<li>v：表示原始值；</li>
+<li>f：表示公式，如<code>B2+B3</code>；</li>
+<li>h：HTML内容</li>
+<li>w：格式化后的内容</li>
+<li>r：富文本内容<code>rich text</code></li>
+<li>等等</li>
+</ul>
+<h3 id="读取workbook">2.2.4. 读取workbook</h3>
+<p>普通方法：</p>
+<pre><code class="language-js hljs javascript"><span class="hljs-comment">// 读取 excel文件</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">outputWorkbook</span>(<span class="hljs-params">workbook</span>) </span>{
+	<span class="hljs-keyword">var</span> sheetNames = workbook.SheetNames; <span class="hljs-comment">// 工作表名称集合</span>
+	sheetNames.forEach(<span class="hljs-function"><span class="hljs-params">name</span> =&gt;</span> {
+		<span class="hljs-keyword">var</span> worksheet = workbook.Sheets[name]; <span class="hljs-comment">// 只能通过工作表名称来获取指定工作表</span>
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> worksheet) {
+			<span class="hljs-comment">// v是读取单元格的原始值</span>
+			<span class="hljs-built_in">console</span>.log(key, key[<span class="hljs-number">0</span>] === <span class="hljs-string">'!'</span> ? worksheet[key] : worksheet[key].v);
+		}
+	});
+}
+</code></pre>
+<p>根据<code>!ref</code>确定excel的范围，再根据<code>!merges</code>确定单元格合并（如果有），最后输出整个table，比较麻烦，幸运的是，插件自身已经写好工具类<code>XLSX.utils</code>给我们直接使用，无需我们自己遍历，工具类输出主要包括如下：</p>
+<p><img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/352797-20180706101342744-1582872577.png" alt="" loading="lazy"></p>
+<p>有些不常用，常用的主要是：</p>
+<ul>
+<li><code>XLSX.utils.sheet_to_csv</code>：生成CSV格式</li>
+<li><code>XLSX.utils.sheet_to_txt</code>：生成纯文本格式</li>
+<li><code>XLSX.utils.sheet_to_html</code>：生成HTML格式</li>
+<li><code>XLSX.utils.sheet_to_json</code>：输出JSON格式</li>
+</ul>
+<p>常用的主要是<code>sheet_to_csv</code>或者<code>sheet_to_html</code>，转csv的话会忽略格式、单元格合并等信息，所以复杂表格可能不适用。转html的话会保留单元格合并，但是生成的是<code>&lt;html&gt;&lt;/html&gt;</code>代码，而不是<code>&lt;table&gt;&lt;/table&gt;</code>，需要对表格进行一些定制时不太方便，所以具体还是要视情况来采用合适的工具类。</p>
+<p>这里写一个采用转csv方式输出结果的简单示例，可点击这里查看<a href="http://demo.haoji.me/2017/02/08-js-xlsx/" target="_blank">在线DEMO</a>：</p>
+<pre><code class="language-js hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readWorkbook</span>(<span class="hljs-params">workbook</span>)
+</span>{
+	<span class="hljs-keyword">var</span> sheetNames = workbook.SheetNames; <span class="hljs-comment">// 工作表名称集合</span>
+	<span class="hljs-keyword">var</span> worksheet = workbook.Sheets[sheetNames[<span class="hljs-number">0</span>]]; <span class="hljs-comment">// 这里我们只读取第一张sheet</span>
+	<span class="hljs-keyword">var</span> csv = XLSX.utils.sheet_to_csv(worksheet);
+	<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'result'</span>).innerHTML = csv2table(csv);
+}
+
+<span class="hljs-comment">// 将csv转换成简单的表格，会忽略单元格合并，在第一行和第一列追加类似excel的索引</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">csv2table</span>(<span class="hljs-params">csv</span>)
+</span>{
+	<span class="hljs-keyword">var</span> html = <span class="hljs-string">'&lt;table&gt;'</span>;
+	<span class="hljs-keyword">var</span> rows = csv.split(<span class="hljs-string">'\n'</span>);
+	rows.pop(); <span class="hljs-comment">// 最后一行没用的</span>
+	rows.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">row, idx</span>) </span>{
+		<span class="hljs-keyword">var</span> columns = row.split(<span class="hljs-string">','</span>);
+		columns.unshift(idx+<span class="hljs-number">1</span>); <span class="hljs-comment">// 添加行索引</span>
+		<span class="hljs-keyword">if</span>(idx == <span class="hljs-number">0</span>) { <span class="hljs-comment">// 添加列索引</span>
+			html += <span class="hljs-string">'&lt;tr&gt;'</span>;
+			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;columns.length; i++) {
+				html += <span class="hljs-string">'&lt;th&gt;'</span> + (i==<span class="hljs-number">0</span>?<span class="hljs-string">''</span>:<span class="hljs-built_in">String</span>.fromCharCode(<span class="hljs-number">65</span>+i<span class="hljs-number">-1</span>)) + <span class="hljs-string">'&lt;/th&gt;'</span>;
+			}
+			html += <span class="hljs-string">'&lt;/tr&gt;'</span>;
+		}
+		html += <span class="hljs-string">'&lt;tr&gt;'</span>;
+		columns.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">column</span>) </span>{
+			html += <span class="hljs-string">'&lt;td&gt;'</span>+column+<span class="hljs-string">'&lt;/td&gt;'</span>;
+		});
+		html += <span class="hljs-string">'&lt;/tr&gt;'</span>;
+	});
+	html += <span class="hljs-string">'&lt;/table&gt;'</span>;
+	<span class="hljs-keyword">return</span> html;
+}
+</code></pre>
+<h1 id="导出excel">导出excel</h1>
+<p>导出分为2种，一种是基于现有excel修改，一种是全新生成，前者比较简单，我们这里着重讲后者。</p>
+<h2 id="自己手写代码生成">3.1. 自己手写代码生成</h2>
+<p>导出excel文件，主要是如何生成一个<code>sheet</code>，我们这里写一个最简单的csv转excel示例：</p>
+<pre><code class="language-js hljs javascript"><span class="hljs-comment">// csv转sheet对象</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">csv2sheet</span>(<span class="hljs-params">csv</span>) </span>{
+	<span class="hljs-keyword">var</span> sheet = {}; <span class="hljs-comment">// 将要生成的sheet</span>
+	csv = csv.split(<span class="hljs-string">'\n'</span>);
+	csv.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">row, i</span>) </span>{
+		row = row.split(<span class="hljs-string">','</span>);
+		<span class="hljs-keyword">if</span>(i == <span class="hljs-number">0</span>) sheet[<span class="hljs-string">'!ref'</span>] = <span class="hljs-string">'A1:'</span>+<span class="hljs-built_in">String</span>.fromCharCode(<span class="hljs-number">65</span>+row.length<span class="hljs-number">-1</span>)+(csv.length<span class="hljs-number">-1</span>);
+		row.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">col, j</span>) </span>{
+			sheet[<span class="hljs-built_in">String</span>.fromCharCode(<span class="hljs-number">65</span>+j)+(i+<span class="hljs-number">1</span>)] = {<span class="hljs-attr">v</span>: col};
+		});
+	});
+	<span class="hljs-keyword">return</span> sheet;
+}
+
+<span class="hljs-comment">// 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sheet2blob</span>(<span class="hljs-params">sheet, sheetName</span>) </span>{
+	sheetName = sheetName || <span class="hljs-string">'sheet1'</span>;
+	<span class="hljs-keyword">var</span> workbook = {
+		<span class="hljs-attr">SheetNames</span>: [sheetName],
+		<span class="hljs-attr">Sheets</span>: {}
+	};
+	workbook.Sheets[sheetName] = sheet;
+	<span class="hljs-comment">// 生成excel的配置项</span>
+	<span class="hljs-keyword">var</span> wopts = {
+		<span class="hljs-attr">bookType</span>: <span class="hljs-string">'xlsx'</span>, <span class="hljs-comment">// 要生成的文件类型</span>
+		bookSST: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性</span>
+		type: <span class="hljs-string">'binary'</span>
+	};
+	<span class="hljs-keyword">var</span> wbout = XLSX.write(workbook, wopts);
+	<span class="hljs-keyword">var</span> blob = <span class="hljs-keyword">new</span> Blob([s2ab(wbout)], {<span class="hljs-attr">type</span>:<span class="hljs-string">"application/octet-stream"</span>});
+	<span class="hljs-comment">// 字符串转ArrayBuffer</span>
+	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">s2ab</span>(<span class="hljs-params">s</span>) </span>{
+		<span class="hljs-keyword">var</span> buf = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ArrayBuffer</span>(s.length);
+		<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint8Array</span>(buf);
+		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i!=s.length; ++i) view[i] = s.charCodeAt(i) &amp; <span class="hljs-number">0xFF</span>;
+		<span class="hljs-keyword">return</span> buf;
+	}
+	<span class="hljs-keyword">return</span> blob;
+}
+</code></pre>
+<p>拿到上面的blob对象就可以直接下载了，参考我之前在<a href="http://blog.haoji.me/js-download.html#JS-dan-chu-xia-zai-dui-hua-kuang" target="_blank">JS弹出下载对话框</a>里面封装好的<code>openDownloadDialog</code>方法：</p>
+<pre><code class="language-js hljs javascript"><span class="hljs-comment">/**
+ * 通用的打开下载对话框方法，没有测试过具体兼容性
+ * @param url 下载地址，也可以是一个blob对象，必选
+ * @param saveName 保存文件名，可选
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">openDownloadDialog</span>(<span class="hljs-params">url, saveName</span>)
+</span>{
+	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> url == <span class="hljs-string">'object'</span> &amp;&amp; url <span class="hljs-keyword">instanceof</span> Blob)
+	{
+		url = URL.createObjectURL(url); <span class="hljs-comment">// 创建blob地址</span>
+	}
+	<span class="hljs-keyword">var</span> aLink = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'a'</span>);
+	aLink.href = url;
+	aLink.download = saveName || <span class="hljs-string">''</span>; <span class="hljs-comment">// HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效</span>
+	<span class="hljs-keyword">var</span> event;
+	<span class="hljs-keyword">if</span>(<span class="hljs-built_in">window</span>.MouseEvent) event = <span class="hljs-keyword">new</span> MouseEvent(<span class="hljs-string">'click'</span>);
+	<span class="hljs-keyword">else</span>
+	{
+		event = <span class="hljs-built_in">document</span>.createEvent(<span class="hljs-string">'MouseEvents'</span>);
+		event.initMouseEvent(<span class="hljs-string">'click'</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, <span class="hljs-built_in">window</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">null</span>);
+	}
+	aLink.dispatchEvent(event);
+}
+</code></pre>
+<p>所以，最终下载实现如下：</p>
+<pre><code class="language-js hljs javascript"><span class="hljs-comment">// 传入csv，执行后就会弹出下载框</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">exportExcel</span>(<span class="hljs-params">csv</span>) </span>{
+	<span class="hljs-keyword">var</span> sheet = csv2sheet(csv);
+	<span class="hljs-keyword">var</span> blob = sheet2blob(sheet);
+	openDownloadDialog(blob, <span class="hljs-string">'导出.xlsx'</span>)；
+}
+</code></pre>
+<h2 id="利用官方工具类生成">3.2. 利用官方工具类生成</h2>
+<p>其实上面这些代码都不需要我们手写，官方已经提供好了现成的工具类给我们使用，主要包括：</p>
+<ul>
+<li><code>aoa_to_sheet</code>: 这个工具类最强大也最实用了，将一个二维数组转成sheet，会自动处理number、string、boolean、date等类型数据；</li>
+<li><code>table_to_sheet</code>: 将一个<code>table dom</code>直接转成sheet，会自动识别<code>colspan</code>和<code>rowspan</code>并将其转成对应的单元格合并；</li>
+<li><code>json_to_sheet</code>: 将一个由对象组成的数组转成sheet；</li>
+</ul>
+<p><code>aoa_to_sheet</code>示例：</p>
+<pre><code class="language-js hljs javascript"><span class="hljs-keyword">var</span> aoa = [
+	[<span class="hljs-string">'姓名'</span>, <span class="hljs-string">'性别'</span>, <span class="hljs-string">'年龄'</span>, <span class="hljs-string">'注册时间'</span>],
+	[<span class="hljs-string">'张三'</span>, <span class="hljs-string">'男'</span>, <span class="hljs-number">18</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()],
+	[<span class="hljs-string">'李四'</span>, <span class="hljs-string">'女'</span>, <span class="hljs-number">22</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()]
+];
+<span class="hljs-keyword">var</span> sheet = XLSX.utils.aoa_to_sheet(aoa);
+openDownloadDialog(sheet2blob(sheet), <span class="hljs-string">'导出.xlsx'</span>);
+</code></pre>
+<p><code>table_to_sheet</code>就更简单了，直接<code>XLSX.utils.table_to_sheet($('table')[0])</code>即可；</p>
+<h2 id="处理单元格合并">3.3. 处理单元格合并</h2>
+<p>一般来说，前端生成<code>excel</code>而不是<code>csv</code>最主要目的都是为了解决csv不能实现单元格合并的问题，要不然直接导出csv文件就好了，何必引入几百kb的插件。</p>
+<p>假设我们要生成如下格式的excel文件，其中<code>A1-C1</code>进行单元格合并：</p>
+<p><img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/352797-20180706101229792-714428734.png" alt="" loading="lazy"></p>
+<p>代码如下：</p>
+<pre><code class="language-js hljs javascript"><span class="hljs-keyword">var</span> aoa = [
+	[<span class="hljs-string">'主要信息'</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-string">'其它信息'</span>], <span class="hljs-comment">// 特别注意合并的地方后面预留2个null</span>
+	[<span class="hljs-string">'姓名'</span>, <span class="hljs-string">'性别'</span>, <span class="hljs-string">'年龄'</span>, <span class="hljs-string">'注册时间'</span>],
+	[<span class="hljs-string">'张三'</span>, <span class="hljs-string">'男'</span>, <span class="hljs-number">18</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()],
+	[<span class="hljs-string">'李四'</span>, <span class="hljs-string">'女'</span>, <span class="hljs-number">22</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()]
+];
+<span class="hljs-keyword">var</span> sheet = XLSX.utils.aoa_to_sheet(aoa);
+sheet[<span class="hljs-string">'!merges'</span>] = [
+	<span class="hljs-comment">// 设置A1-C1的单元格合并</span>
+    {<span class="hljs-attr">s</span>: {<span class="hljs-attr">r</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">0</span>}, <span class="hljs-attr">e</span>: {<span class="hljs-attr">r</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">2</span>}}
+];
+openDownloadDialog(sheet2blob(sheet), <span class="hljs-string">'单元格合并示例.xlsx'</span>);
+</code></pre>
+<p>需要注意的地方就是被合并的单元格要用<code>null</code>预留出位置，否则后面的内容（本例中是第四列<code>其它信息</code>）会被覆盖。</p>
+<h2 id="自定义样式">3.4. 自定义样式</h2>
+<p>普通版本不支持定义字体、颜色、背景色等，有这个功能需要的可以使用<a href="http://sheetjs.com/pro" target="_blank">pro版</a>，好像是要收费的，因为官网没看到下载地址。</p>
+
+</div>
+<div id="MySignature" style="display: block;"><div>
+    <img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/352797-20200311200000608-1539069077.png" style="width: 540px;margin: 8px 2px;">
+</div>
+个人网站：<a href="https://haoji.me/" target="_blank">https://haoji.me</a><br>
+github：<a href="https://github.com/sxei" target="_blank">https://github.com/sxei</a><br>
+博客园：<a href="http://www.cnblogs.com/liuxianan" target="_blank">http://www.cnblogs.com/liuxianan</a><br>
+copyright ©2012-2020 小茗同学
+<p style="color: #FF8301; margin-top: 20px">【转载文章务必保留出处和署名，谢谢！】</p></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/liuxianan/category/856038.html" target="_blank">Web前端</a></div>
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/liuxianan/tag/JS/">JS</a>,             <a href="https://www.cnblogs.com/liuxianan/tag/excel/">excel</a>,             <a href="https://www.cnblogs.com/liuxianan/tag/xlsx/">xlsx</a>,             <a href="https://www.cnblogs.com/liuxianan/tag/%E5%AF%BC%E5%85%A5/">导入</a>,             <a href="https://www.cnblogs.com/liuxianan/tag/%E5%AF%BC%E5%87%BA/">导出</a>,             <a href="https://www.cnblogs.com/liuxianan/tag/%E8%A7%A3%E6%9E%90/">解析</a>,             <a href="https://www.cnblogs.com/liuxianan/tag/javascript/">javascript</a></div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(9272143,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;876891be-7913-e111-b422-842b2b196315&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/liuxianan/" target="_blank"><img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20160108090502.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/liuxianan/">我是小茗同学</a><br>
+            <a href="https://home.cnblogs.com/u/liuxianan/followees/">关注 - 18</a><br>
+            <a href="https://home.cnblogs.com/u/liuxianan/followers/">粉丝 - 870</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;876891be-7913-e111-b422-842b2b196315&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(9272143,&#39;Digg&#39;)" style="display: block;">
+        <span class="diggnum" id="digg_count">19</span>
+    </div>
+    
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/liuxianan/p/react-native-7-navigator.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/liuxianan/p/react-native-7-navigator.html" title="发布于 2018-03-15 11:25">ReactNative学习笔记（七）Navigator的使用</a>
+    <br>
+    <a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html" title="发布于 2018-10-15 10:17">VSCode插件开发全攻略（一）概览</a>
+
+</div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2018-07-06 10:16</span>&nbsp;
+<a href="https://www.cnblogs.com/liuxianan/">我是小茗同学</a>&nbsp;
+阅读(<span id="post_view_count">151520</span>)&nbsp;
+评论(<span id="post_comment_count">35</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=9272143" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(9272143);return false;">收藏</a></div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 117633, cb_blogApp = 'liuxianan', cb_blogUserGuid = '876891be-7913-e111-b422-842b2b196315';
+    var cb_entryId = 9272143, cb_entryCreatedDate = '2018-07-06 10:16', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+    loadSideColumnAd();
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder">
+
+<div id="comment_pager_top">
+    
+</div>
+
+<br>
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"><div class="feedbackNoItems"></div></div>	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4014025" class="layer">#1楼</a>
+<a name="4014025" id="comment_anchor_4014025"></a>
+
+ 
+<span class="comment_date">2018-07-06 10:53</span>
+
+ 
+
+            <a id="a_comment_author_4014025" href="https://www.cnblogs.com/cuiwenyuan/" target="_blank">troy.cui</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4014025" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    赞
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/u125871.jpg"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4014025, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4014025, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4014025_avatar" style="display:none">
+            https://pic.cnblogs.com/face/u125871.jpg
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4014057" class="layer">#2楼</a>
+<a name="4014057" id="comment_anchor_4014057"></a>
+
+ 
+<span class="comment_date">2018-07-06 11:23</span>
+
+ 
+
+            <a id="a_comment_author_4014057" href="https://home.cnblogs.com/u/328677/" target="_blank">dgdyq</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4014057" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    支持
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4014057, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4014057, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem myself">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4014266" class="layer">#3楼</a>
+<a name="4014266" id="comment_anchor_4014266"></a>
+[<span class="louzhu">楼主</span>]
+ 
+<span class="comment_date">2018-07-06 15:43</span>
+
+ 
+
+            <a id="a_comment_author_4014266" href="https://www.cnblogs.com/liuxianan/" target="_blank">我是小茗同学</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4014266" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    <a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4014057" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4014057);">@</a>
+dgdyq<br><fieldset class="comment_quote"><legend><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4014057" title="查看引用原文">引用</a></legend><br>支持<br></fieldset><br>感谢支持！
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20160108090502.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4014266, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4014266, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4014266_avatar" style="display:none">
+            https://pic.cnblogs.com/face/352797/20160108090502.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4014648" class="layer">#4楼</a>
+<a name="4014648" id="comment_anchor_4014648"></a>
+
+ 
+<span class="comment_date">2018-07-06 23:02</span>
+
+ 
+
+            <a id="a_comment_author_4014648" href="https://www.cnblogs.com/longware/" target="_blank">longware</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4014648" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    good
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20190815001505.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4014648, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4014648, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4014648_avatar" style="display:none">
+            https://pic.cnblogs.com/face/79428/20190815001505.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4014651" class="layer">#5楼</a>
+<a name="4014651" id="comment_anchor_4014651"></a>
+
+ 
+<span class="comment_date">2018-07-06 23:04</span>
+
+ 
+
+            <a id="a_comment_author_4014651" href="https://www.cnblogs.com/longware/" target="_blank">longware</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4014651" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    建议lz写一篇性能对比的文章，比如用jsp/PHP后台导出10000行的excel，前台js导出1w行，看看时间差多少
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20190815001505.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4014651, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4014651, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4014651_avatar" style="display:none">
+            https://pic.cnblogs.com/face/79428/20190815001505.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4015757" class="layer">#6楼</a>
+<a name="4015757" id="comment_anchor_4015757"></a>
+
+ 
+<span class="comment_date">2018-07-09 08:53</span>
+
+ 
+
+            <a id="a_comment_author_4015757" href="https://www.cnblogs.com/JAYIT/" target="_blank">Lost blog</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4015757" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    mk
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20150317113716.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4015757, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4015757, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4015757_avatar" style="display:none">
+            https://pic.cnblogs.com/face/380866/20150317113716.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4032335" class="layer">#7楼</a>
+<a name="4032335" id="comment_anchor_4032335"></a>
+
+ 
+<span class="comment_date">2018-07-31 10:45</span>
+
+ 
+
+            <a id="a_comment_author_4032335" href="https://www.cnblogs.com/Platform/" target="_blank">茫茫江浸月</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4032335" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    刚好用到，支持一下
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20150919073824.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4032335, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4032335, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4032335_avatar" style="display:none">
+            https://pic.cnblogs.com/face/727949/20150919073824.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4118955" class="layer">#8楼</a>
+<a name="4118955" id="comment_anchor_4118955"></a>
+
+ 
+<span class="comment_date">2018-11-20 18:26</span>
+
+ 
+
+            <a id="a_comment_author_4118955" href="https://home.cnblogs.com/u/1435327/" target="_blank">平淡，但不平凡</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4118955" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    我请问一下JavaScript读取和导出excel示例那个页面上，输出excel表格后，可以直接修改内容，然后直接保存，这个是怎么做到的呀？能给个思路吗？
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4118955, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4118955, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4165198" class="layer">#9楼</a>
+<a name="4165198" id="comment_anchor_4165198"></a>
+
+ 
+<span class="comment_date">2019-01-17 16:42</span>
+
+ 
+
+            <a id="a_comment_author_4165198" href="https://www.cnblogs.com/gnile/" target="_blank">Chobohoo</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4165198" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    发现有个问题,就是关于日期格式的.<br>js-xlsx默认会转成"mm/dd/yy"格式,而且,在sheet_to_csv的时候,默认会返回格式化好的值(w值),但我想要的是v值,或者,w值直接转化成自己需要的格式.<br>设置dateNF参数,貌似没能起作用.<br>不知是啥原因
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/u80040.jpg"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4165198, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4165198, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4165198_avatar" style="display:none">
+            https://pic.cnblogs.com/face/u80040.jpg
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4186982" class="layer">#10楼</a>
+<a name="4186982" id="comment_anchor_4186982"></a>
+
+ 
+<span class="comment_date">2019-02-25 08:28</span>
+
+ 
+
+            <a id="a_comment_author_4186982" href="https://www.cnblogs.com/zyz2018/" target="_blank">德聚仁和</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4186982" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    楼主，下载文件打开显示“文件已损坏”
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4186982, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4186982, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4189263" class="layer">#11楼</a>
+<a name="4189263" id="comment_anchor_4189263"></a>
+
+ 
+<span class="comment_date">2019-02-27 11:08</span>
+
+ 
+
+            <a id="a_comment_author_4189263" href="https://home.cnblogs.com/u/1393429/" target="_blank">风~雪</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4189263" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    sheet2blob这个方法里边调用的XLSX.write 会报错xlsx.core.min.js 里边   我传入的是正确的csv啊！
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4189263, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4189263, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4239272" class="layer">#12楼</a>
+<a name="4239272" id="comment_anchor_4239272"></a>
+
+ 
+<span class="comment_date">2019-04-24 11:26</span>
+
+ 
+
+            <a id="a_comment_author_4239272" href="https://www.cnblogs.com/SnailMove/" target="_blank">zxymapper</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4239272" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    楼主，如何根据单元格的类型转换数据，比如 excel日期格式获取的数据是1900年至今的天数这个怎么获取？
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20170623150746.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4239272, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4239272, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4239272_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1188053/20170623150746.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4281827" class="layer">#13楼</a>
+<a name="4281827" id="comment_anchor_4281827"></a>
+
+ 
+<span class="comment_date">2019-06-17 18:00</span>
+
+ 
+
+            <a id="a_comment_author_4281827" href="https://www.cnblogs.com/duyanming/" target="_blank">杜燕明</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4281827" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    mark
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20191004083555.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4281827, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4281827, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4281827_avatar" style="display:none">
+            https://pic.cnblogs.com/face/998152/20191004083555.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4291398" class="layer">#14楼</a>
+<a name="4291398" id="comment_anchor_4291398"></a>
+
+ 
+<span class="comment_date">2019-07-02 13:23</span>
+
+ 
+
+            <a id="a_comment_author_4291398" href="https://www.cnblogs.com/wjf9492/" target="_blank">穿越时光机</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4291398" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    可以是可以，只不过为什么导出后，少了一行，你的demo也是一样，楼主能反应一下吗？
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20171113142443.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4291398, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4291398, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4291398_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1270018/20171113142443.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4292282" class="layer">#15楼</a>
+<a name="4292282" id="comment_anchor_4292282"></a>
+
+ 
+<span class="comment_date">2019-07-03 12:24</span>
+
+ 
+
+            <a id="a_comment_author_4292282" href="https://home.cnblogs.com/u/1642830/" target="_blank">刘小121</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4292282" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    楼主给个参数说明可好？？？<br>file填文件路劲吗？？<br>那 callback填写什么<br>function readWorkbookFromLocalFile(file, callback) {
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4292282, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4292282, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4312436" class="layer">#16楼</a>
+<a name="4312436" id="comment_anchor_4312436"></a>
+
+ 
+<span class="comment_date">2019-07-30 14:59</span>
+
+ 
+
+            <a id="a_comment_author_4312436" href="https://www.cnblogs.com/QH-Jimmy/" target="_blank">书生小龙</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4312436" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    赞，请问这些参数解释是从github翻译过来的吗
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20171114174225.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4312436, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4312436, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4312436_avatar" style="display:none">
+            https://pic.cnblogs.com/face/858904/20171114174225.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4397046" class="layer">#17楼</a>
+<a name="4397046" id="comment_anchor_4397046"></a>
+
+ 
+<span class="comment_date">2019-10-19 21:26</span>
+
+ 
+
+            <a id="a_comment_author_4397046" href="https://www.cnblogs.com/dk1024/" target="_blank">死磕编程</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4397046" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    大佬，aoa_to_sheet这种方式，拼接参数的时候，怎么设置开始新的一列
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20200401171156.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4397046, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4397046, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4397046_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1519601/20200401171156.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4398217" class="layer">#18楼</a>
+<a name="4398217" id="comment_anchor_4398217"></a>
+
+ 
+<span class="comment_date">2019-10-21 09:01</span>
+
+ 
+
+            <a id="a_comment_author_4398217" href="https://home.cnblogs.com/u/1805043/" target="_blank">adeng1024</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4398217" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    写得太好了,看着注释简单易懂
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4398217, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4398217, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4402896" class="layer">#19楼</a>
+<a name="4402896" id="comment_anchor_4402896"></a>
+
+ 
+<span class="comment_date">2019-10-24 16:54</span>
+
+ 
+
+            <a id="a_comment_author_4402896" href="https://home.cnblogs.com/u/1847336/" target="_blank">__最好的问题吗</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4402896" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    '!merges'的用法从哪个接口文档看到的啊
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4402896, &#39;Digg&#39;, this.parentElement, false);">
+                支持(1)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4402896, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4408730" class="layer">#20楼</a>
+<a name="4408730" id="comment_anchor_4408730"></a>
+
+ 
+<span class="comment_date">2019-10-30 09:49</span>
+
+ 
+
+            <a id="a_comment_author_4408730" href="https://www.cnblogs.com/C1SupportTeam/" target="_blank">葡萄城开发工具</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4408730" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    作者的提供的工具挺好，读取导入Excel 的功能也比较完善，作为开源工具来说已经十分优秀了。我这边提供一份商用前端电子表格控件SpreadJS，你也可以对比参考下， <a href="https://demo.grapecity.com.cn/spreadjs/excel-online/content/index.html" target="_blank">https://demo.grapecity.com.cn/spreadjs/excel-online/content/index.html</a> 
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20200511110106.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4408730, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4408730, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4408730_avatar" style="display:none">
+            https://pic.cnblogs.com/face/428690/20200511110106.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4449097" class="layer">#21楼</a>
+<a name="4449097" id="comment_anchor_4449097"></a>
+
+ 
+<span class="comment_date">2019-12-04 15:25</span>
+
+ 
+
+            <a id="a_comment_author_4449097" href="https://home.cnblogs.com/u/1889408/" target="_blank">PUBG滴滴</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4449097" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    手机：小米9<br>安卓版本：10.1<br>前端用mui<br><br><br><br><br>现象：弹出下载提示框（openDownloadDialog），但是点击下载会推出app，并且文件并未下载，但是浏览器上面却能正常下载
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4449097, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4449097, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4493976" class="layer">#22楼</a>
+<a name="4493976" id="comment_anchor_4493976"></a>
+
+ 
+<span class="comment_date">2020-02-06 14:32</span>
+
+ 
+
+            <a id="a_comment_author_4493976" href="https://www.cnblogs.com/guyuedashu/" target="_blank">古月大叔</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4493976" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    这也太强大了
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20200601181526.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4493976, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4493976, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4493976_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1708982/20200601181526.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4501953" class="layer">#23楼</a>
+<a name="4501953" id="comment_anchor_4501953"></a>
+
+ 
+<span class="comment_date">2020-02-21 11:05</span>
+
+ 
+
+            <a id="a_comment_author_4501953" href="https://www.cnblogs.com/GisNicer/" target="_blank">promission</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4501953" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    大佬 多个sheet怎么导出到一个excel文件里面呀
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20200214150412.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4501953, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4501953, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4501953_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1613009/20200214150412.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4516367" class="layer">#24楼</a>
+<a name="4516367" id="comment_anchor_4516367"></a>
+
+ 
+<span class="comment_date">2020-03-09 14:48</span>
+
+ 
+
+            <a id="a_comment_author_4516367" href="https://home.cnblogs.com/u/1965584/" target="_blank">BrM</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4516367" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p>openDownloadDialog(<br>
+sheet2blob([sheet, sheet]),<br>
+"导出.xlsx"<br>
+);</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4516367, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4516367, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4516368" class="layer">#25楼</a>
+<a name="4516368" id="comment_anchor_4516368"></a>
+
+ 
+<span class="comment_date">2020-03-09 14:49</span>
+
+ 
+
+            <a id="a_comment_author_4516368" href="https://home.cnblogs.com/u/1965584/" target="_blank">BrM</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4516368" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p>传入sheet改为数组，sheet2bolb方法再处理数组可实现多sheet导出</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4516368, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4516368, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4516369" class="layer">#26楼</a>
+<a name="4516369" id="comment_anchor_4516369"></a>
+
+ 
+<span class="comment_date">2020-03-09 14:49</span>
+
+ 
+
+            <a id="a_comment_author_4516369" href="https://home.cnblogs.com/u/1965584/" target="_blank">BrM</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4516369" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p>var workbook = {<br>
+SheetNames: [],<br>
+Sheets: <br>
+};<br>
+var ii = 1;<br>
+for (var i of sheet) {<br>
+var sheetName = "sheet" + ii;<br>
+ii++;<br>
+workbook.SheetNames.push(sheetName);<br>
+workbook.Sheets[sheetName] = i;<br>
+} // 多sheet导出</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4516369, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4516369, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4516373" class="layer">#27楼</a>
+<a name="4516373" id="comment_anchor_4516373"></a>
+
+ 
+<span class="comment_date">2020-03-09 14:50</span>
+
+ 
+
+            <a id="a_comment_author_4516373" href="https://home.cnblogs.com/u/1965584/" target="_blank">BrM</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4516373" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4501953" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4501953);" target="_blank">@</a>promission<br>
+方法传入sheet改为数组，方法待优化</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4516373, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4516373, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4520946" class="layer">#28楼</a>
+<a name="4520946" id="comment_anchor_4520946"></a>
+
+ 
+<span class="comment_date">2020-03-14 11:35</span>
+
+ 
+
+            <a id="a_comment_author_4520946" href="https://home.cnblogs.com/u/1971412/" target="_blank">whwyz</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4520946" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p>git能下下来么，为什么一直卡的不动</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4520946, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4520946, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4532234" class="layer">#29楼</a>
+<a name="4532234" id="comment_anchor_4532234"></a>
+
+ 
+<span class="comment_date">2020-03-25 17:36</span>
+
+ 
+
+            <a id="a_comment_author_4532234" href="https://home.cnblogs.com/u/1965584/" target="_blank">BrM</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4532234" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p><a href="https://github.com/mrp961022/downloadbyjs.git" target="_blank">https://github.com/mrp961022/downloadbyjs.git</a><br>
+我在lz代码的基础上做了点修改，在vue项目中的实例，有兴趣的可以看一下</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4532234, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4532234, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4532236" class="layer">#30楼</a>
+<a name="4532236" id="comment_anchor_4532236"></a>
+
+ 
+<span class="comment_date">2020-03-25 17:37</span>
+
+ 
+
+            <a id="a_comment_author_4532236" href="https://home.cnblogs.com/u/1965584/" target="_blank">BrM</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4532236" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4520946" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4520946);" target="_blank">@</a>whwyz<br>
+可以看一下</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/sample_face.gif"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4532236, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4532236, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4590980" class="layer">#31楼</a>
+<a name="4590980" id="comment_anchor_4590980"></a>
+
+ 
+<span class="comment_date">2020-05-30 09:26</span>
+
+ 
+
+            <a id="a_comment_author_4590980" href="https://www.cnblogs.com/visionv/" target="_blank">Vision视觉</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4590980" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p>学到了</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20191208192158.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4590980, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4590980, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4590980_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1827177/20191208192158.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4618605" class="layer">#32楼</a>
+<a name="4618605" id="comment_anchor_4618605"></a>
+
+ 
+<span class="comment_date">2020-06-29 13:32</span>
+
+ 
+
+            <a id="a_comment_author_4618605" href="https://www.cnblogs.com/sen-2017/" target="_blank">小时候很胖</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4618605" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p>遇到单元格内容包含逗号的就会分裂，以逗号分隔一列变两列，html上这一行数据就乱了，<br>
+用demo也是一样的问题，你们没遇到过吗？</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20180324153247.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4618605, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4618605, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4618605_avatar" style="display:none">
+            https://pic.cnblogs.com/face/845508/20180324153247.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4618608" class="layer">#33楼</a>
+<a name="4618608" id="comment_anchor_4618608"></a>
+
+ 
+<span class="comment_date">2020-06-29 13:37</span>
+
+ 
+
+            <a id="a_comment_author_4618608" href="https://www.cnblogs.com/sen-2017/" target="_blank">小时候很胖</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4618608" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p>@<br>
+遇到换行也会，一行变多行</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20180324153247.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4618608, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4618608, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4618608_avatar" style="display:none">
+            https://pic.cnblogs.com/face/845508/20180324153247.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4618895" class="layer">#34楼</a>
+<a name="4618895" id="comment_anchor_4618895"></a>
+
+ 
+<span class="comment_date">2020-06-29 17:10</span>
+
+ 
+
+            <a id="a_comment_author_4618895" href="https://www.cnblogs.com/sen-2017/" target="_blank">小时候很胖</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4618895" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4291398" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4291398);" target="_blank">@</a>穿越时光机<br>
+rows.pop() 因为这句吧</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20180324153247.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4618895, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4618895, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4618895_avatar" style="display:none">
+            https://pic.cnblogs.com/face/845508/20180324153247.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#4619510" class="layer">#35楼</a>
+<a name="4619510" id="comment_anchor_4619510"></a>
+
+        <span id="comment-maxId" style="display:none">4619510</span>
+        <span id="comment-maxDate" style="display:none">2020/6/30 上午11:25:18</span>
+ 
+<span class="comment_date">2020-06-30 11:25</span>
+
+ 
+
+            <a id="a_comment_author_4619510" href="https://www.cnblogs.com/sen-2017/" target="_blank">小时候很胖</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4619510" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p>@<br>
+找到原因了，是因为把excel数据读到以后转化成csv在从csv填充到html,而scv里面是用逗号分隔字段，用换行分隔数据行的。<br>
+但是我不用csv换用json之后又发现新问题，就是用json接收数据会丢失第一行数据，这个谁知道怎么回事啊</p>
+
+<img class="user-avatar" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20180324153247.png"></div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4619510, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4619510, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4619510_avatar" style="display:none">
+            https://pic.cnblogs.com/face/845508/20180324153247.png
+        </span>
+
+			</div>
+		</div>
+
+<div id="comment_pager_bottom">
+    
+</div>
+
+
+</div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#top">返回顶部</a></div>
+    <div id="comment_form_container" style="visibility: visible;"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://www.wenjuan.com/s/3uIjeq0/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-博客园问卷调查&#39;)">【推荐】了解你才能更懂你，博客园首发问卷调查，助力社区新升级</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-ucancode&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://developer.aliyun.com/article/744670?utm_content=g_1000104140" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云开发者社区&#39;)">【推荐】如何在面试中成长？来看阿里前端终面官的面试心得</a><br></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="c_ad_block"><a href="http://e.cn.miaozhen.com/r/k=2175675&amp;p=7b4mT&amp;dx=__IPDX__&amp;rt=2&amp;pro=n&amp;ns=__IP__&amp;ni=__IESID__&amp;v=__LOC__&amp;xa=__ADPLATFORM__&amp;tr=__REQUESTID__&amp;o=https://developer.huaweicloud.com/activity/modelarts_class.html?region=cn-north-4&amp;utm_source=bokeyuan&amp;utm_medium=ADP-huaweiyun&amp;utm_campaign=MAP20206&amp;utm_term=bokeyuan-banner-B2#/dashboard" target="_blank"><img width="300" height="250" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/2016690-20200701123702161-1066719663.jpg" alt="华为云-AI实战营" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;C1-华为云-AI实战营&#39;);"></a></div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="使用纯前端JavaScript 实现Excel  IO" href="https://www.cnblogs.com/likeFlyingFish/p/5794467.html" target="_blank" onclick="clickRecomItmem(5794467)">使用纯前端JavaScript 实现Excel  IO</a><br>·  <a title="使用纯前端JavaScript 实现Excel IO" href="https://www.cnblogs.com/bubugao/p/js4.html" target="_blank" onclick="clickRecomItmem(5806634)">使用纯前端JavaScript 实现Excel IO</a><br>·  <a title="使用js-xlsx库，前端读取Excel报表文件" href="https://www.cnblogs.com/sunshq/p/6019867.html" target="_blank" onclick="clickRecomItmem(6019867)">使用js-xlsx库，前端读取Excel报表文件</a><br>·  <a title="Java中导入、导出Excel" href="https://www.cnblogs.com/jerehedu/p/4343509.html" target="_blank" onclick="clickRecomItmem(4343509)">Java中导入、导出Excel</a><br>·  <a title="JAVA导出EXCEL表格" href="https://www.cnblogs.com/gudongcheng/p/8268909.html" target="_blank" onclick="clickRecomItmem(8268909)">JAVA导出EXCEL表格</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/9272143">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="display: none;">
+        <div id="div-gpt-ad-1592366332455-0" style="width: 468px; height: 60px;"></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/666544/" target="_blank">马云下死命令留他？阿里辟谣：不会高薪聘请黑掉阿里网站的人，直接交给警察</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/666543/" target="_blank">布局电商分期业务？字节跳动申请 “抖分期”商标</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/666542/" target="_blank">瑞幸股东特别大会结果出炉：陆正耀刘二海黎辉董事罢免议案通过</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/666540/" target="_blank">中国特斯拉车主卑微维权：完全自动驾驶差点要了命！渣土车并线，竟然加速撞上去</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/666539/" target="_blank">疯狂孙正义：向天再借260年</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);        deliverT2();
+        deliverC1C2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<div id="sidebar_news" class="newsItem"><!--done-->
+<h3 class="catListTitle">公告</h3>
+
+<div id="blog-news">
+    <img src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/20160108090502(1).png" alt="小茗同学的头像" class="img_avatar">
+<br>
+欢迎访问我的个人博客^_^：<br><a href="http://haoji.me/" style="color:#337AC6" target="_blank">http://haoji.me(好记么)</a>
+<div>您是本博客第<img style="vertical-align: middle;margin: 0 5px;min-width: 84px;" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/counter.php">位访客</div>
+<div>
+所有文章首发于我的<a href="https://haoji.me/" target="_blank">个人博客</a>和<a href="http://www.cnblogs.com/liuxianan/">博客园</a>。
+我的<a href="https://github.com/sxei/" target="_blank">github</a>
+</div>
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/liuxianan/">
+            我是小茗同学
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/liuxianan/" title="入园时间：2011-11-20">
+            8年7个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/liuxianan/followers/">
+            870
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/liuxianan/followees/">
+            18
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;876891be-7913-e111-b422-842b2b196315&#39;)">+加关注</a></div>
+        <script>getFollowStatus('876891be-7913-e111-b422-842b2b196315');</script>
+    </div>
+</div>
+
+</div>
+
+<div id="sidebar_ad"></div>
+			<div id="blog-calendar" style="display: block;">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2020/06/06&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2020年7月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2020/08/06&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                        <td class="" align="center">
+                            2
+                        </td>
+                        <td class="" align="center">
+                            3
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        4
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            5
+                        </td>
+                            <td class="CalTodayDay" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                7
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                            <td class="" align="center">
+                                9
+                            </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            11
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            12
+                        </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                            <td class="" align="center">
+                                16
+                            </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            18
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            19
+                        </td>
+                            <td class="" align="center">
+                                20
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                            <td class="" align="center">
+                                23
+                            </td>
+                            <td class="" align="center">
+                                24
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            25
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            26
+                        </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                            <td class="" align="center">
+                                30
+                            </td>
+                            <td class="" align="center">
+                                31
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            2
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                7
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            8
+                        </td>
+                </tr>
+    </tbody>
+</table></div><script>loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    <div class="catListLink">
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+		<li>
+
+<a href="https://www.cnblogs.com/liuxianan/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/liuxianan/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/liuxianan/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/liuxianan/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/liuxianan/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+
+
+</div>
+
+<!-- 最新随笔 -->
+<div id="sidebar_recentposts" class="sidebar-block">
+    <div class="catListEssay">
+<h3 class="catListTitle">最新随笔</h3>
+<ul>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/liuxianan/p/chrome-net-err-cert-weak-key.html">1.Chrome在新版MacOS上报错 NET::ERR_CERT_WEAK_KEY 解决方法</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-common-api.html">2.VSCode插件开发全攻略（九）常用API总结</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-publish.html">3.VSCode插件开发全攻略（十）打包、发布、升级</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-snippets-and-settings.html">4.VSCode插件开发全攻略（八）代码片段、设置、自定义欢迎页</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-webview.html">5.VSCode插件开发全攻略（七）WebView</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-develop-tips.html">6.VSCode插件开发全攻略（六）开发调试技巧</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-jump-completion-hover.html">7.VSCode插件开发全攻略（五）跳转到定义、自动补全、悬停提示</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-command-and-menu.html">8.VSCode插件开发全攻略（四）命令、菜单、快捷键</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-package-json.html">9.VSCode插件开发全攻略（三）package.json详解</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-hello-world.html">10.VSCode插件开发全攻略（二）HelloWord</a>
+
+                </li>
+			
+
+</ul>
+</div>
+
+
+</div>
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    <div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+
+        <li>
+            <a href="https://www.cnblogs.com/liuxianan/tag/%E5%BC%80%E5%8F%91/">开发</a>(12)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/liuxianan/tag/%E6%8F%92%E4%BB%B6/">插件</a>(11)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/liuxianan/tag/vscode/">vscode</a>(10)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/liuxianan/tag/plugin/">plugin</a>(10)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/liuxianan/tag/JS/">JS</a>(8)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/liuxianan/tag/native/">native</a>(7)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/liuxianan/tag/react/">react</a>(7)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/liuxianan/tag/Java/">Java</a>(3)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/liuxianan/tag/javascript/">javascript</a>(3)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/liuxianan/tag/format/">format</a>(2)
+        </li>
+    <li>
+        <a href="https://www.cnblogs.com/liuxianan/tag/">更多</a>
+    </li>
+
+</ul>
+</div>
+
+
+</div>
+
+<!-- 积分与排名 -->
+<div id="sidebar_scorerank" class="sidebar-block">
+    <div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	
+187463
+	</li>
+	<li class="liRank">
+		排名 -	
+2978
+	</li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+        <div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+            <h3 class="catListTitle">
+                
+
+随笔分类
+<span style="font-size:11px;font-weight:normal">(68)</span>
+
+
+            </h3>
+
+
+            <ul>
+
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/category/389196.html" rel="" target="">
+    C#(3)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/category/446069.html" rel="" target="">
+    C/C++(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/category/400101.html" rel="" target="">
+    Java(21)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/category/798411.html" rel="" target="">
+    Linux(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/category/856038.html" rel="" target="">
+    Web前端(35)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/category/470498.html" rel="" target="">
+    其它未分类(5)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/category/400100.html" rel="" target="">
+    碎碎念(1)
+</a>
+ 
+
+                        </li>
+
+            </ul>
+
+
+        </div>
+        <div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+            <h3 class="catListTitle">
+                
+
+随笔档案
+<span style="font-size:11px;font-weight:normal">(69)</span>
+
+
+            </h3>
+
+
+            <ul>
+
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2020/01.html" rel="" target="">
+    2020年1月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2018/11.html" rel="" target="">
+    2018年11月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2018/10.html" rel="" target="">
+    2018年10月(8)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2018/07.html" rel="" target="">
+    2018年7月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2018/03.html" rel="" target="">
+    2018年3月(8)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2018/01.html" rel="" target="">
+    2018年1月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2017/11.html" rel="" target="">
+    2017年11月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2017/07.html" rel="" target="">
+    2017年7月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2017/05.html" rel="" target="">
+    2017年5月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2016/11.html" rel="" target="">
+    2016年11月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2016/10.html" rel="" target="">
+    2016年10月(3)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2016/09.html" rel="" target="">
+    2016年9月(5)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2016/08.html" rel="" target="">
+    2016年8月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2016/07.html" rel="" target="">
+    2016年7月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2016/03.html" rel="" target="">
+    2016年3月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2016/01.html" rel="" target="">
+    2016年1月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2015/03.html" rel="" target="">
+    2015年3月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2013/04.html" rel="" target="">
+    2013年4月(3)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2013/01.html" rel="" target="">
+    2013年1月(5)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2012/11.html" rel="" target="">
+    2012年11月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2012/10.html" rel="" target="">
+    2012年10月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2012/09.html" rel="" target="">
+    2012年9月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2012/08.html" rel="" target="">
+    2012年8月(8)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2012/07.html" rel="" target="">
+    2012年7月(5)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/liuxianan/archive/2012/06.html" rel="" target="">
+    2012年6月(1)
+</a>
+ 
+
+                        </li>
+
+            </ul>
+
+
+        </div>
+        <div id="sidebar_links470421" class="catList sidebar-block">
+            <h3 class="catListTitle">
+                
+
+web前台
+
+
+
+            </h3>
+
+
+            <ul>
+
+                        <li>
+                            
+<a href="http://crazynemo.iteye.com/blog/1006763" rel="nofollow noopener noreferrer" target="">
+    JS中如何判断null、undefined与NaN
+</a>
+ 
+
+                        </li>
+
+            </ul>
+
+
+        </div>
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-common-api.html">1. Re:VSCode插件开发全攻略（九）常用API总结</a></li>
+                    <li class="recent_comment_body">@我是小茗同学 小茗很好喝...</li>
+                    <li class="recent_comment_author">--恰恰的故事</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-develop-tips.html">2. Re:VSCode插件开发全攻略（六）开发调试技巧</a></li>
+                    <li class="recent_comment_body">工程根目录获取 let projectPath = ''; let document = vscode.window.activeTextEditor?.document; if(vscode.wor...</li>
+                    <li class="recent_comment_author">--over58</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">3. Re:使用hexo+github搭建免费个人博客详细教程</a></li>
+                    <li class="recent_comment_body"><p>我的主页：<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html" target="blank"></a></p>
+</li>
+                    <li class="recent_comment_author">--DaviZhong</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html">4. Re:如何使用JavaScript实现纯前端读取和导出excel文件</a></li>
+                    <li class="recent_comment_body">@ 找到原因了，是因为把excel数据读到以后转化成csv在从csv填充到html,而scv里面是用逗号分隔字段，用换行分隔数据行的。 但是我不用csv换用json之后又发现新问题，就是用json接收...</li>
+                    <li class="recent_comment_author">--小时候很胖</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html">5. Re:如何使用JavaScript实现纯前端读取和导出excel文件</a></li>
+                    <li class="recent_comment_body">@穿越时光机 rows.pop() 因为这句吧...</li>
+                    <li class="recent_comment_author">--小时候很胖</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html">6. Re:如何使用JavaScript实现纯前端读取和导出excel文件</a></li>
+                    <li class="recent_comment_body"><p>@<br>
+遇到换行也会，一行变多行</p>
+</li>
+                    <li class="recent_comment_author">--小时候很胖</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html">7. Re:如何使用JavaScript实现纯前端读取和导出excel文件</a></li>
+                    <li class="recent_comment_body"><p>遇到单元格内容包含逗号的就会分裂，以逗号分隔一列变两列，html上这一行数据就乱了，<br>
+用demo也是一样的问题，你们没遇到过吗？</p>
+</li>
+                    <li class="recent_comment_author">--小时候很胖</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-jump-completion-hover.html">8. Re:VSCode插件开发全攻略（五）跳转到定义、自动补全、悬停提示</a></li>
+                    <li class="recent_comment_body"><p>单词分割的那个需要在语言的configuration配置文件中的wordPattern中配置的</p>
+</li>
+                    <li class="recent_comment_author">--丶Ant丶</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">9. Re:使用hexo+github搭建免费个人博客详细教程</a></li>
+                    <li class="recent_comment_body"><p>github 用户名驼峰命名，导致hexo 404.怎么解决</p>
+</li>
+                    <li class="recent_comment_author">--维克托阿斯弗</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">10. Re:使用hexo+github搭建免费个人博客详细教程</a></li>
+                    <li class="recent_comment_body"><p>谢谢大佬的分享，非常详细，帮到了我。</p>
+<p>欢迎访问我的博客：<a href="https://www.cnblogs.com/liuxianan/p/js-excel.html" target="blank"></a></p>
+</li>
+                    <li class="recent_comment_author">--JAVA学习LU</li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    <div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/chrome-plugin-develop.html">
+                            1. 【干货】Chrome插件(扩展)开发全攻略(267296)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/disable-chrome-extension-warning.html">
+                            2. 彻底禁用Chrome的“请停用以开发者模式运行的扩展程序”提示(202246)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/archive/2012/08/05/2624300.html">
+                            3. 一个非常标准的Java连接Oracle数据库的示例代码(201387)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">
+                            4. 使用hexo+github搭建免费个人博客详细教程(160399)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/js-excel.html">
+                            5. 如何使用JavaScript实现纯前端读取和导出excel文件(151520)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/linux_install_svn_server.html">
+                            6. Linux下安装SVN服务端小白教程(107667)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-jump-completion-hover.html">
+                            7. VSCode插件开发全攻略（五）跳转到定义、自动补全、悬停提示(78866)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html">
+                            8. VSCode插件开发全攻略（一）概览(68203)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/archive/2013/01/15/2861196.html">
+                            9. 【入门教程】使用Eclipse搭建C/C++开发环境(65209)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/beian.html">
+                            10. 详细记录一下网站备案经过，备案真的很简单(48385)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    <div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/chrome-plugin-develop.html">
+                            1. 【干货】Chrome插件(扩展)开发全攻略(135)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/archive/2013/04/13/3018732.html">
+                            2. 【超详细教程】使用Windows Live Writer 2012和Office Word 2013 发布文章到博客园全面总结(111)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/disable-chrome-extension-warning.html">
+                            3. 彻底禁用Chrome的“请停用以开发者模式运行的扩展程序”提示(95)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/pinyinjs.html">
+                            4. 【干货】JS版汉字与拼音互转终极方案，附简单的JS拼音输入法(75)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">
+                            5. 使用hexo+github搭建免费个人博客详细教程(67)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/https.html">
+                            6. HTTPS从认识到线上实战全记录(54)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/err_unsafe_port.html">
+                            7. 坑爹坑娘坑祖宗的87端口（记一次tomcat故障排查）(45)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/json-format.html">
+                            8. 有强迫症的我只能自己写一个json格式化工具(36)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/js-excel.html">
+                            9. 如何使用JavaScript实现纯前端读取和导出excel文件(35)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/liuxianan/p/html5-video-resize.html">
+                            10. 巧用transform实现HTML5 video标签视频比例拉伸(25)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/liuxianan/p/chrome-plugin-develop.html">
+                                1. 【干货】Chrome插件(扩展)开发全攻略(269)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">
+                                2. 使用hexo+github搭建免费个人博客详细教程(232)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/liuxianan/archive/2013/04/13/3018732.html">
+                                3. 【超详细教程】使用Windows Live Writer 2012和Office Word 2013 发布文章到博客园全面总结(202)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/liuxianan/p/pinyinjs.html">
+                                4. 【干货】JS版汉字与拼音互转终极方案，附简单的JS拼音输入法(125)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/liuxianan/p/https.html">
+                                5. HTTPS从认识到线上实战全记录(86)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright © 2020 我是小茗同学
+<br><span id="poweredby">Powered by .NET Core on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    <div id="page_end_html">
+        <link href="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/font-awesome.min.css" rel="stylesheet">
+<link href="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/animate.min.css" rel="stylesheet">
+<link href="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/markdown-toc.css" rel="stylesheet">
+<script type="text/javascript" src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/markdown-toc.js.下载"></script>
+<script>
+
+// 图片懒加载
+;(function(){
+
+ $('#cnblogs_post_body img').each(function(idx, img) {
+    var res = /W(\d+)xH(\d+)_?$/g.exec(img.alt);
+    if(!res) return false;
+    img.dataset.lazySrc = img.src;
+    img.style.width = res[1] + 'px';
+    img.style.height = res[2] + 'px';
+    img.src = 'http://res.haoji.me/blog/images/transparent.gif';
+})
+
+})();
+
+/**
+ * 图片懒加载插件，与绝大多数同类插件不同的是，本插件同时支持img的src和div的背景图懒加载
+ * 将图片以背景图的方式展示到div的好处是可以轻松实现图片不变形，所以背景图懒加载的需求还是比较常见的
+ * 使用方法：将页面中展示图片的div或者img的图片地址以data-lazy-src="xxx"形式指定
+ * 然后引入本JS即可，无需任何其他代码，支持动态生成内容的懒加载，但是每次动态增加内容之后需主动调用一句：
+ * $(window).scroll();
+ * @start 2016-08-18
+ * @last 2016-09-08
+ * @author lxa
+ */
+;(function($)
+{
+	$(window).on('scroll resize load', function(e)
+	{
+		var notFoundCount = 0, maxNotFound = 2, screenHeight = $(window).height();
+		$('[data-lazy-src]').each(function()
+		{
+			var pos = this.getBoundingClientRect();
+			if(pos.bottom <= 0) return true; // 如果当前图片在视野上方，继续往下查找
+			if(pos.top >= screenHeight) return (notFoundCount++) < maxNotFound; // 如果连续超过 maxNotFound 张图片都在视野下方，停止查找，注意只有从上到下的图片布局才能这样判断
+			var src = this.dataset.lazySrc;
+			if(!src) return;
+			if(this.nodeName === 'IMG') this.src = src;
+			else this.style.backgroundImage = 'url(' + src + ')';
+			this.removeAttribute('data-lazy-src');
+		});
+	});
+})(jQuery);
+
+
+
+$.fn.extend(
+	{
+		/**
+		 * 给H1-H6添加数字导航，如1.3.6
+		 * 注意，必须在getMarkdownTOC()方法之后调用本方法，否则获取到的内容会有多余的类似“1.2.1”这样的东西
+		 */
+		addNumberBeforeHeaderline: function(ignoreH1)
+		{
+			var list = [], elements = this.find('h1,h2,h3,h4,h5,h6');			
+			for(var i=0; i<elements.size(); i++)
+			{
+				var level = parseInt(elements[i].nodeName.substr(1)); // 提取h1~h6中的数字
+				// 这一步是为了修正一些可能不正确的写法，比如H1后面紧跟H3，那么我们将在中间自动补上H2
+				for(var j = (list[list.length-1] || [0])[0] + 1; j<level; j++) list.push([j, -1]);
+				list.push([level, i]);
+			}
+			var h = []; // 记录每一个层级最高的索引
+			for(var i=0; i<list.length; i++)
+			{
+				var level = list[i][0];
+				var result = '';
+				h[level] = (h[level] || 0) + 1; // 从0开始自增
+				for(var j=level+1; j<=6; j++) h[j] = 0; // 例如，h2自增后，h2后面的h3-h6都要归零
+				for(var j=1; j<=level; j++) result += h[j] + '.';
+				if(ignoreH1 && level == 1) continue;
+				$(elements[list[i][1]]).prepend(result + ' ');
+			}
+		}
+       });
+
+
+
+$(window).on('load', function()
+{
+    if($('#tbCommentAuthor').val() == '我是小茗同学') $('#cnzz_wrapper').css('display', 'block');
+
+    setTimeout(function()
+    {
+        var count = parseInt($('#digg_count').html());
+        var maxCount = 15;
+        var hasDing =  $('#digg_tips').text().indexOf('您已推荐过')>=0;
+       if(!hasDing) $('.diggit').show();
+    if($('#tbCommentAuthor').length>0 && $('#tbCommentAuthor').val() !== '我是小茗同学' && !hasDing  && count < maxCount)
+    {
+        var fn = $('#div_digg > .diggit').attr('onclick');
+        if(parseInt(Math.random()*10)<2) {
+          //eval('('+fn+')');
+          //$('.diggit').remove();
+        } else $('.diggit').show();
+    } else {
+      $('.diggit').show();
+   }
+
+    }, 1500);
+
+});
+$(function()
+{
+    $('body').initMarkdownTOC($('.cnblogs-markdown'));
+    $('.cnblogs-markdown').addNumberBeforeHeaderline(true);
+    $('#blogTitle h1').addClass('bounceInLeft animated');
+    $('#blogTitle h2').addClass('bounceInRight animated');
+    $('.cnblogs-markdown a').attr('target', '_blank'); // 所有链接新窗口打开
+    // 本人时显示最近评论
+    if($('#tbCommentAuthor').val() == '我是小茗同学') $('#sidebar_recentcomments ').show();
+    // 删除反对按钮
+    $('.buryit').remove();
+});
+function initCommentData()
+{
+    $('.feedbackItem').each(function()
+    {
+        var text = $(this).find('.feedbackListSubtitle .layer').text();
+        // 将楼层信息放到data里面
+        // $(this).find('.blog_comment_body').attr('data-louceng', text.replace(/^#/g, ''));
+        if($(this).find('.feedbackListSubtitle .louzhu').length>0) $(this).addClass('myself');
+		var avatar = $(this).find('> .feedbackCon > span').html() || 'http://pic.cnitblog.com/face/sample_face.gif';
+		$(this).find('> .feedbackCon > .blog_comment_body').append('<img class="user-avatar" src="'+avatar+'"/>')
+    });
+}
+
+$(document).ajaxComplete(function(event, xhr, settings) {
+ // 监听获取评论ajax事件
+ if(settings.url.indexOf('/ajax/GetComments.aspx') >= 0) {
+    initCommentData();
+}
+});
+
+// 底部增加快速评论
+;(function()
+{
+	var div = document.createElement('a');
+	div.className = 'fast-comment';
+	div.innerHTML = '查看<br>评论';
+	div.href = '#blog-comments-placeholder';
+	document.body.appendChild(div);
+})();
+</script>
+
+
+<div id="cnzz_wrapper">
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260206164'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1260206164%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script><span id="cnzz_stat_icon_1260206164"><a href="https://www.cnzz.com/stat/website.php?web_id=1260206164" target="_blank">站长统计</a><a href="https://www.cnzz.com/stat/website.php?web_id=1260206164" target="_blank"> |  今日IP[5] | 今日PV[5] | 昨日IP[778] |  昨日PV[1042] | </a><a href="https://www.cnzz.com/stat/website.php?web_id=1260206164&amp;method=online" target="_blank">当前在线[15]</a></span><script src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/z_stat.php" type="text/javascript"></script><script src="./如何使用JavaScript实现纯前端读取和导出excel文件 - 我是小茗同学 - 博客园_files/core.php" charset="utf-8" type="text/javascript"></script>
+</div>
+    </div><a class="fast-comment" href="https://www.cnblogs.com/liuxianan/p/js-excel.html#blog-comments-placeholder">查看<br>评论</a>
+
+
+<div class="markdown-nav-wrapper"><div class="markdown-nav-sidebar"></div><div class="markdown-nav-content"><div class="title">文章目录：</div><div class="markdown-toc"><ol data-level="1"><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#js-xlsx-%E4%BB%8B%E7%BB%8D" class="active">js-xlsx 介绍</a><ol data-level="2"><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E5%85%BC%E5%AE%B9%E6%80%A7">兼容性</a></li><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8">如何使用</a></li></ol></li><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E8%AF%BB%E5%8F%96excel">读取excel</a><ol data-level="2"><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E8%8E%B7%E5%8F%96workbook%E5%AF%B9%E8%B1%A1">获取workbook对象</a><ol data-level="3"><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E8%AF%BB%E5%8F%96%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6">读取本地文件</a></li><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E8%AF%BB%E5%8F%96%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6">读取网络文件</a></li></ol></li><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E8%AF%A6%E8%A7%A3-workbook">详解 workbook</a><ol data-level="3"><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#workbook-object">Workbook Object</a></li><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#sheet-object">Sheet Object</a></li><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E5%8D%95%E5%85%83%E6%A0%BC%E5%AF%B9%E8%B1%A1">单元格对象</a></li><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E8%AF%BB%E5%8F%96workbook">读取workbook</a></li></ol></li></ol></li><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E5%AF%BC%E5%87%BAexcel">导出excel</a><ol data-level="2"><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E8%87%AA%E5%B7%B1%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90">自己手写代码生成</a></li><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E5%88%A9%E7%94%A8%E5%AE%98%E6%96%B9%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%94%9F%E6%88%90">利用官方工具类生成</a></li><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E5%A4%84%E7%90%86%E5%8D%95%E5%85%83%E6%A0%BC%E5%90%88%E5%B9%B6">处理单元格合并</a></li><li><a href="https://www.cnblogs.com/liuxianan/p/js-excel.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F">自定义样式</a></li></ol></li></ol></div></div><div class="markdown-nav-btn"><i class="fa fa-list-ul" title="显示或隐藏文章目录"></i></div></div></body></html>
